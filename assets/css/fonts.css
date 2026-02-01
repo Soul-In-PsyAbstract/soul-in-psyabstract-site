@@ -1,0 +1,8 @@
+@font-face{
+  font-family:'Caveat';
+  src:url('../fonts/Caveat-VariableFont_wght.ttf') format('truetype');
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap
+}
+html{font-family:"Caveat",system-ui,Segoe UI,Inter,Arial}
