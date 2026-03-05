@@ -61,13 +61,14 @@ h2{margin:0 0 10px 0;font-size:28px;color:var(--aqua)}
   grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
   gap:14px;
 }
+.grid-arts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;margin-top:18px}
 .art{
   border:1px solid var(--line);
   border-radius:14px;
   overflow:hidden;
   background:rgba(0,0,0,.25);
 }
-.art img{width:100%;display:block}
+.art img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;object-position:center}
 .art .meta{padding:12px}
 .k{color:var(--muted);font-size:12px}
 pre.txt{
