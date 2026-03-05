@@ -3,7 +3,7 @@
   const wrap = document.getElementById('rotator');
   if (!wrap) return;
   // Fetch phrases
-  fetch('/assets/texts/hero_phrases.json').then(r=>r.json()).then(data => {
+  fetch('/meta/data/hero_phrases.json').then(r=>r.json()).then(data => {
     const lang = window.__LANG || 'ru';
     const arr = (data[lang] || []).slice();
     if (!arr.length) return;

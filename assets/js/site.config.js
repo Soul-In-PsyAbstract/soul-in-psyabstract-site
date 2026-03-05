@@ -3,7 +3,7 @@
   "project": {
     "name": "Soul in PsyAbstract",
     "owner": "Marina Saponenko",
-    "canonical": "https://soulinpsyabstract.42web.io/",
+    "canonical": "https://soulinpsyabstract.com/",
     "languages": ["ru", "en"],
     "default_lang": "ru",
     "routing": "spa-hash",
@@ -62,11 +62,11 @@
       "website": {
         "enabled": true,
         "name": "Soul in PsyAbstract",
-        "url": "https://soulinpsyabstract.42web.io/",
+        "url": "https://soulinpsyabstract.com/",
         "potentialAction": [
           {
             "@type": "SearchAction",
-            "target": "https://soulinpsyabstract.42web.io/?q={search_term_string}",
+            "target": "https://soulinpsyabstract.com/?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         ]
@@ -325,7 +325,7 @@
     ]
   },
   "robots": {
-    "content": "User-agent: *\nAllow: /\nDisallow: /assets/\nSitemap: https://soulinpsyabstract.42web.io/sitemap.xml\n"
+    "content": "User-agent: *\nAllow: /\nDisallow: /assets/\nSitemap: https://soulinpsyabstract.com/sitemap.xml\n"
   },
   "server": {
     "htaccess_needed": true,
