@@ -1,18 +1,101 @@
 // /assets/js/data.js — 94 карточки (01.jpg…94.jpg) + NFT список
 window.__DATA__ = {
-  ART: Array.from({length:94},(_,i)=>{
-    const n=i+1, nn=String(n).padStart(2,'0');
-    const price = n<=10?400:(n<=40?600:(n<=70?800:1000));
-    return {
-      code:`art_${nn}`,
-      file:`${nn}.jpg`,
-      title_ru:`Работа №${n}`,
-      title_en:`Artwork #${n}`,
-      price_usd: price,
-      nft: "",
-      sold: false
-    };
-  })
+  ART: [
+    { code:"art_01", file:"01.jpg", title_ru:"Спираль любви и хаоса",           title_en:"Spirals of Love and Chaos",          price_usd:400,  nft:"", sold:false },
+    { code:"art_02", file:"02.jpg", title_ru:"Любовь в спирали",                 title_en:"Love in Spirals",                    price_usd:400,  nft:"", sold:false },
+    { code:"art_03", file:"03.jpg", title_ru:"Люмінесцентна симфонія серця",     title_en:"Luminescent Symphony of Hearts",     price_usd:400,  nft:"", sold:false },
+    { code:"art_04", file:"04.jpg", title_ru:"Сердца в лабиринте",               title_en:"Hearts in Labyrinth",                price_usd:400,  nft:"", sold:false },
+    { code:"art_05", file:"05.jpg", title_ru:"Душевный хаос",                    title_en:"Soul's Chaos",                       price_usd:400,  nft:"", sold:false },
+    { code:"art_06", file:"06.jpg", title_ru:"Неоновая душа хаоса",              title_en:"Neon Soul of Chaos",                 price_usd:400,  nft:"", sold:false },
+    { code:"art_07", file:"07.jpg", title_ru:"Танец неоновых душ",               title_en:"Dance of Neon Souls",                price_usd:400,  nft:"", sold:false },
+    { code:"art_08", file:"08.jpg", title_ru:"Спираль душевных желаний",         title_en:"Spiral of Heart's Desires",          price_usd:400,  nft:"", sold:false },
+    { code:"art_09", file:"09.jpg", title_ru:"Сердца в синем хаосе",             title_en:"Hearts in Blue Chaos",               price_usd:400,  nft:"", sold:false },
+    { code:"art_10", file:"10.jpg", title_ru:"Сияющий цветок хаоса",             title_en:"Luminous Flower of Chaos",           price_usd:400,  nft:"", sold:false },
+    { code:"art_11", file:"11.jpg", title_ru:"Подводный карнавал света",         title_en:"Underwater Light Carnival",          price_usd:600,  nft:"", sold:false },
+    { code:"art_12", file:"12.jpg", title_ru:"Неоновые сердца хаоса",            title_en:"Neon hearts of chaos",               price_usd:600,  nft:"", sold:false },
+    { code:"art_13", file:"13.jpg", title_ru:"Подводный карнавал",               title_en:"Underwater Carnival",                price_usd:600,  nft:"", sold:false },
+    { code:"art_14", file:"14.jpg", title_ru:"Слоны неона танцуют",              title_en:"Neon elephants dance",               price_usd:600,  nft:"", sold:false },
+    { code:"art_15", file:"15.jpg", title_ru:"Неоновый хаос сердец",             title_en:"Neon Hearts Unbound",                price_usd:600,  nft:"", sold:false },
+    { code:"art_16", file:"16.jpg", title_ru:"Душа в хаосе",                     title_en:"Soul in Chaos",                      price_usd:600,  nft:"", sold:false },
+    { code:"art_17", file:"17.jpg", title_ru:"Синий хаос любви",                 title_en:"Blue Chaos of Love",                 price_usd:600,  nft:"", sold:false },
+    { code:"art_18", file:"18.jpg", title_ru:"Психоделическое сердце хаоса",     title_en:"Psychedelic Heart of Chaos",         price_usd:600,  nft:"", sold:false },
+    { code:"art_19", file:"19.jpg", title_ru:"Сова внутри себя",                 title_en:"Owl Within",                         price_usd:600,  nft:"", sold:false },
+    { code:"art_20", file:"20.jpg", title_ru:"Слоны радужных снов",              title_en:"Elephants of Rainbow Dreams",        price_usd:600,  nft:"", sold:false },
+    { code:"art_21", file:"21.jpg", title_ru:"Душа в хаосе",                     title_en:"Soul in Chaos",                      price_usd:600,  nft:"", sold:false },
+    { code:"art_22", file:"22.jpg", title_ru:"Танец радужных спиралей",          title_en:"Rainbow Spiral Dance",               price_usd:600,  nft:"", sold:false },
+    { code:"art_23", file:"23.jpg", title_ru:"Неоновый хаос сердец",             title_en:"Neon Hearts Chaos",                  price_usd:600,  nft:"", sold:false },
+    { code:"art_24", file:"24.jpg", title_ru:"Душа в спирали",                   title_en:"Soul in Spirals",                    price_usd:600,  nft:"", sold:false },
+    { code:"art_25", file:"25.jpg", title_ru:"Душа в хаосе",                     title_en:"Soul in Chaos",                      price_usd:600,  nft:"", sold:false },
+    { code:"art_26", file:"26.jpg", title_ru:"Спираль сознания",                 title_en:"Spiral of Consciousness",            price_usd:600,  nft:"", sold:false },
+    { code:"art_27", file:"27.jpg", title_ru:"PsyAbstract Работа 27",            title_en:"PsyAbstract Work 27",                price_usd:600,  nft:"", sold:false },
+    { code:"art_28", file:"28.jpg", title_ru:"Душевные спирали",                 title_en:"Spirals of the Soul",                price_usd:600,  nft:"", sold:false },
+    { code:"art_29", file:"29.jpg", title_ru:"Неоновый хаос души",               title_en:"Neon Chaos of Soul",                 price_usd:600,  nft:"", sold:false },
+    { code:"art_30", file:"30.jpg", title_ru:"Карнавал безумия",                 title_en:"Carnival of Madness",                price_usd:600,  nft:"", sold:false },
+    { code:"art_31", file:"31.jpg", title_ru:"Синий хаос любви",                 title_en:"Blue Chaos of Love",                 price_usd:600,  nft:"", sold:false },
+    { code:"art_32", file:"32.jpg", title_ru:"PsyAbstract Работа 32",            title_en:"PsyAbstract Work 32",                price_usd:600,  nft:"", sold:false },
+    { code:"art_33", file:"33.jpg", title_ru:"Цветочное сердце вселенной",       title_en:"Cosmic Flower Heart",                price_usd:600,  nft:"", sold:false },
+    { code:"art_34", file:"34.jpg", title_ru:"Танец цветных душ",                title_en:"Dance of Colored Souls",             price_usd:600,  nft:"", sold:false },
+    { code:"art_35", file:"35.jpg", title_ru:"Спираль сознания",                 title_en:"Spiral of Consciousness",            price_usd:600,  nft:"", sold:false },
+    { code:"art_36", file:"36.jpg", title_ru:"Танец синих душ",                  title_en:"Dance of Blue Souls",                price_usd:600,  nft:"", sold:false },
+    { code:"art_37", file:"37.jpg", title_ru:"Флюид космической любви",          title_en:"Fluid Cosmic Love",                  price_usd:600,  nft:"", sold:false },
+    { code:"art_38", file:"38.jpg", title_ru:"Вопросы в цвете",                  title_en:"Questions in Color",                 price_usd:600,  nft:"", sold:false },
+    { code:"art_39", file:"39.jpg", title_ru:"Неоновая симфония",                title_en:"Neon Symphony",                      price_usd:600,  nft:"", sold:false },
+    { code:"art_40", file:"40.jpg", title_ru:"Неоновый хаос сердец",             title_en:"Neon Hearts Collide",                price_usd:600,  nft:"", sold:false },
+    { code:"art_41", file:"41.jpg", title_ru:"Люминесцентный хаос сердец",       title_en:"Luminescent chaos of hearts",        price_usd:800,  nft:"", sold:false },
+    { code:"art_42", file:"42.jpg", title_ru:"Танец неоновых душ",               title_en:"Neon Souls Dancing",                 price_usd:800,  nft:"", sold:false },
+    { code:"art_43", file:"43.jpg", title_ru:"Душа в спирали",                   title_en:"Soul in spirals",                    price_usd:800,  nft:"", sold:false },
+    { code:"art_44", file:"44.jpg", title_ru:"Сияющий хаос любви",               title_en:"Glowing Chaos of Love",              price_usd:800,  nft:"", sold:false },
+    { code:"art_45", file:"45.jpg", title_ru:"Хаос цветных сердец",              title_en:"Chaos of Colored Hearts",            price_usd:800,  nft:"", sold:false },
+    { code:"art_46", file:"46.jpg", title_ru:"Люминесцентный хаос любви",        title_en:"Luminescent chaos of love",          price_usd:800,  nft:"", sold:false },
+    { code:"art_47", file:"47.jpg", title_ru:"Неоновая душа хаоса",              title_en:"Neon Soul of Chaos",                 price_usd:800,  nft:"", sold:false },
+    { code:"art_48", file:"48.jpg", title_ru:"Неоновый хаос любви",              title_en:"Neon chaos of love",                 price_usd:800,  nft:"", sold:false },
+    { code:"art_49", file:"49.jpg", title_ru:"Бонг и поцелуи",                   title_en:"Bong & Kisses",                      price_usd:800,  nft:"", sold:false },
+    { code:"art_50", file:"50.jpg", title_ru:"PsyAbstract Работа 50",            title_en:"PsyAbstract Work 50",                price_usd:800,  nft:"", sold:false },
+    { code:"art_51", file:"51.jpg", title_ru:"Спираль золотых снов",             title_en:"Spiral of Golden Dreams",            price_usd:800,  nft:"", sold:false },
+    { code:"art_52", file:"52.jpg", title_ru:"Радужный танец сердец",            title_en:"Rainbow Heart Dance",                price_usd:800,  nft:"", sold:false },
+    { code:"art_53", file:"53.jpg", title_ru:"Радужный взрыв энергии",           title_en:"Rainbow Energy Burst",               price_usd:800,  nft:"", sold:false },
+    { code:"art_54", file:"54.jpg", title_ru:"PsyAbstract Работа 54",            title_en:"PsyAbstract Work 54",                price_usd:800,  nft:"", sold:false },
+    { code:"art_55", file:"55.jpg", title_ru:"Сердца в хаосе света",             title_en:"Hearts in Light's Chaos",            price_usd:800,  nft:"", sold:false },
+    { code:"art_56", file:"56.jpg", title_ru:"Душа в хаосе",                     title_en:"Soul in Chaos",                      price_usd:800,  nft:"", sold:false },
+    { code:"art_57", file:"57.jpg", title_ru:"Пчела в хаосе",                    title_en:"Bee in Chaos",                       price_usd:800,  nft:"", sold:false },
+    { code:"art_58", file:"58.jpg", title_ru:"Хаос цветных сердец",              title_en:"Chaos of Colorful Hearts",           price_usd:800,  nft:"", sold:false },
+    { code:"art_59", file:"59.jpg", title_ru:"Люминесцентные сердца хаоса",      title_en:"Neon Hearts Collide",                price_usd:800,  nft:"", sold:false },
+    { code:"art_60", file:"60.jpg", title_ru:"Люминесцентные сердца",            title_en:"Luminescent Hearts",                 price_usd:800,  nft:"", sold:false },
+    { code:"art_61", file:"61.jpg", title_ru:"Роза в хаосе",                     title_en:"Rose in Chaos",                      price_usd:800,  nft:"", sold:false },
+    { code:"art_62", file:"62.jpg", title_ru:"PsyAbstract Работа 62",            title_en:"PsyAbstract Work 62",                price_usd:800,  nft:"", sold:false },
+    { code:"art_63", file:"63.jpg", title_ru:"Цветущие сердца хаоса",            title_en:"Blooming hearts of chaos",           price_usd:800,  nft:"", sold:false },
+    { code:"art_64", file:"64.jpg", title_ru:"Душа в хаосе",                     title_en:"Soul in Chaos",                      price_usd:800,  nft:"", sold:false },
+    { code:"art_65", file:"65.jpg", title_ru:"PsyAbstract Работа 65",            title_en:"PsyAbstract Work 65",                price_usd:800,  nft:"", sold:false },
+    { code:"art_66", file:"66.jpg", title_ru:"Спирали цветных снов",             title_en:"Spirals of Colored Dreams",          price_usd:800,  nft:"", sold:false },
+    { code:"art_67", file:"67.jpg", title_ru:"Любовь в хаосе",                   title_en:"Love in Chaos",                      price_usd:800,  nft:"", sold:false },
+    { code:"art_68", file:"68.jpg", title_ru:"Сердца в хаосе света",             title_en:"Hearts in Chaos Light",              price_usd:800,  nft:"", sold:false },
+    { code:"art_69", file:"69.jpg", title_ru:"Сердца в спирали света",           title_en:"Hearts in spiraling light",          price_usd:800,  nft:"", sold:false },
+    { code:"art_70", file:"70.jpg", title_ru:"Лабиринт живых листьев",           title_en:"Labyrinth of Living Leaves",         price_usd:800,  nft:"", sold:false },
+    { code:"art_71", file:"71.jpg", title_ru:"Древо жизни светится",             title_en:"Tree of Life Glows",                 price_usd:1000, nft:"", sold:false },
+    { code:"art_72", file:"72.jpg", title_ru:"Сердце растущего дерева",          title_en:"Heart of the Growing Tree",          price_usd:1000, nft:"", sold:false },
+    { code:"art_73", file:"73.jpg", title_ru:"Дерево сердец и спиралей",         title_en:"Tree of Hearts and Spirals",         price_usd:1000, nft:"", sold:false },
+    { code:"art_74", file:"74.jpg", title_ru:"Ветви света и тени",               title_en:"Branches of Light and Shadow",       price_usd:1000, nft:"", sold:false },
+    { code:"art_75", file:"75.jpg", title_ru:"Сердце в лабиринте",               title_en:"Heart in Labyrinth",                 price_usd:1000, nft:"", sold:false },
+    { code:"art_76", file:"76.jpg", title_ru:"Душа в спирали",                   title_en:"Soul in Spirals",                    price_usd:1000, nft:"", sold:false },
+    { code:"art_77", file:"77.jpg", title_ru:"Синий хаос",                       title_en:"Blue Chaos",                         price_usd:1000, nft:"", sold:false },
+    { code:"art_78", file:"78.jpg", title_ru:"Неоновый взрыв радости",           title_en:"Neon burst of joy",                  price_usd:1000, nft:"", sold:false },
+    { code:"art_79", file:"79.jpg", title_ru:"Дерево душевных спиралей",         title_en:"Tree of Soulful Spirals",            price_usd:1000, nft:"", sold:false },
+    { code:"art_80", file:"80.jpg", title_ru:"PsyAbstract Работа 80",            title_en:"PsyAbstract Work 80",                price_usd:1000, nft:"", sold:false },
+    { code:"art_81", file:"81.jpg", title_ru:"Синий хаос сознания",              title_en:"Blue Chaos of Mind",                 price_usd:1000, nft:"", sold:false },
+    { code:"art_82", file:"82.jpg", title_ru:"Душа в хаосе",                     title_en:"Soul in Chaos",                      price_usd:1000, nft:"", sold:false },
+    { code:"art_83", file:"83.jpg", title_ru:"Сердца в лабиринте",               title_en:"Hearts in the Labyrinth",            price_usd:1000, nft:"", sold:false },
+    { code:"art_84", file:"84.jpg", title_ru:"Двойное сердце хаоса",             title_en:"Dual Hearts of Chaos",               price_usd:1000, nft:"", sold:false },
+    { code:"art_85", file:"85.jpg", title_ru:"PsyAbstract Работа 85",            title_en:"PsyAbstract Work 85",                price_usd:1000, nft:"", sold:false },
+    { code:"art_86", file:"86.jpg", title_ru:"PsyAbstract Работа 86",            title_en:"PsyAbstract Work 86",                price_usd:1000, nft:"", sold:false },
+    { code:"art_87", file:"87.jpg", title_ru:"Танец неоновых сердец",            title_en:"Neon Hearts Dance",                  price_usd:1000, nft:"", sold:false },
+    { code:"art_88", file:"88.jpg", title_ru:"Спираль внутреннего взгляда",      title_en:"Spiral of Inner Vision",             price_usd:1000, nft:"", sold:false },
+    { code:"art_89", file:"89.jpg", title_ru:"Хаос цветных сердец",              title_en:"Chaos of Colored Hearts",            price_usd:1000, nft:"", sold:false },
+    { code:"art_90", file:"90.jpg", title_ru:"Неоновые сердца космоса",          title_en:"Neon Hearts of Chaos",               price_usd:1000, nft:"", sold:false },
+    { code:"art_91", file:"91.jpg", title_ru:"Сердца в спирали",                 title_en:"Hearts in Spirals",                  price_usd:1000, nft:"", sold:false },
+    { code:"art_92", file:"92.jpg", title_ru:"PsyAbstract Работа 92",            title_en:"PsyAbstract Work 92",                price_usd:1000, nft:"", sold:false },
+    { code:"art_93", file:"93.jpg", title_ru:"Душа в цвете",                     title_en:"Soul in Color",                      price_usd:1000, nft:"", sold:false },
+    { code:"art_94", file:"94.jpg", title_ru:"Взрыв цветных снов",               title_en:"Explosion of colored dreams",        price_usd:1000, nft:"", sold:false }
+  ]
 };
 
 // NFT ссылки — 21
@@ -40,7 +123,7 @@ window.NFTS = [
   "https://og.rarible.com/token/polygon/0x35f8aee672cde8e5fd09c93d2bfe4ff5a9cf0756:19223264877338955498166477182825409596884630599573943600177382871287898046470"
 ];
 
-// Пример сопоставления первых N работ с первыми ссылками
+// Сопоставление первых N работ с первыми ссылками
 (function attachNFT(){
   const L = window.NFTS||[];
   (window.__DATA__.ART||[]).forEach((a,i)=>{ if(L[i]) a.nft=L[i]; });

@@ -9,9 +9,10 @@
   const SOLD = new Set(); // computed dynamically if needed
 
   function priceFor(i){
-    // tiers cycle 400/600/800/1000 for demo
-    const tiers = [400,600,800,1000];
-    return tiers[(i-1) % tiers.length];
+    if (i <= 10) return 400;
+    if (i <= 40) return 600;
+    if (i <= 70) return 800;
+    return 1000;
   }
 
   const grid = document.createElement('div');
@@ -33,6 +34,14 @@
     else if (FREE.has(i)) badge.textContent = 'FREE';
     else badge.textContent = 'FOR SALE';
 
+    // Title from __DATA__
+    const artData = window.__DATA__ && window.__DATA__.ART && window.__DATA__.ART[i-1];
+    const titleEl = document.createElement('div');
+    titleEl.className = 'art-title';
+    if (artData) {
+      titleEl.textContent = window.__LANG === 'en' ? artData.title_en : artData.title_ru;
+    }
+
     const p = document.createElement('div');
     p.className = 'muted';
     p.textContent = window.__LANG === 'en'
@@ -46,10 +55,12 @@
     const price = priceFor(i);
     btn.textContent = (window.__LANG === 'en' ? 'Buy ' : 'Купить ') + `$${price}`;
     btn.href = '#';
-    btn.addEventListener('click', (e) => { e.preventDefault(); openBuy(i, price); });
+    const artTitle = artData ? (window.__LANG === 'en' ? artData.title_en : artData.title_ru) : `Art #${i}`;
+    btn.addEventListener('click', (e) => { e.preventDefault(); openBuy(i, price, artTitle); });
     buy.appendChild(btn);
 
     meta.appendChild(badge);
+    meta.appendChild(titleEl);
     meta.appendChild(p);
     meta.appendChild(buy);
 
@@ -60,11 +71,12 @@
   mount.appendChild(grid);
 
   // minimal buy modal shim
-  window.openBuy = function(idx, basePrice){
+  window.openBuy = function(idx, basePrice, title){
+    const titleLine = title ? `\n"${title}"\n` : '';
     const exclusive = confirm((window.__LANG==='en'?'Add exclusive rights +$200?':'Добавить эксклюзивные права +$200?'));
     const shipping = prompt(window.__LANG==='en'?'Shipping (150/200/300):':'Доставка (150/200/300):','150');
     const total = basePrice + (exclusive?200:0) + (parseInt(shipping||'0',10)||0);
-    alert((window.__LANG==='en'?'Total: $':'Итого: $') + total + '\n' + (window.__LANG==='en'?'PayPal link will open now.':'Сейчас откроется ссылка PayPal.'));
+    alert(titleLine + (window.__LANG==='en'?'Total: $':'Итого: $') + total + '\n' + (window.__LANG==='en'?'PayPal link will open now.':'Сейчас откроется ссылка PayPal.'));
     // open PayPal.me fast link with amount
     window.open('https://paypal.me/SoulInPsyAbstract/' + total, '_blank');
   };
