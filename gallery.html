@@ -42,15 +42,20 @@
     
 <section class="card">
   <h2>Gallery</h2>
-  <div class="small">Items: <b id="gallery-count">0</b></div>
+  
 </section>
 <section class="card">
-  <div class="grid" id="gallery-grid"></div>
+  <div class="grid" id="gallery"></div>
 </section>
 
     <div class="footer">Aelin AquaSoul · Soul In PsyAbstract · “In the moment of panic, she still does the right thing.”</div>
   </main>
-  <script src="assets/js/app.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/pay-config.js"></script>
+  <script src="assets/js/gallery.js"></script>
+  <script src="assets/js/buy-modal.js"></script>
+  <script src="assets/js/pwa.js"></script>
   <script>
     if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{});
   </script>
