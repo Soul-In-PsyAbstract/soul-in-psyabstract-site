@@ -22,38 +22,55 @@
           <button class="btn" id="kid-toggle">Ребёнок: OFF</button>
         </div>
       </div>
-      
-    <nav class="nav">
-      <a class="pill" href="index.html" data-i18n="nav.home">Главная</a>
-      <a class="pill" href="gallery.html" data-i18n="nav.gallery">Галерея</a>
-      <a class="pill" href="nft.html">NFT</a>
-      <a class="pill" href="manifest.html" data-i18n="nav.manifest">Манифест</a>
-      <a class="pill" href="poems.html" data-i18n="nav.poems">Стихи</a>
-      <a class="pill" href="songs.html" data-i18n="nav.songs">Песни</a>
-      <a class="pill" href="faq.html">FAQ</a>
-      <a class="pill" href="contacts.html" data-i18n="nav.contacts">Контакты</a>
-      <a class="pill" href="ai.html">AI</a>
-    </nav>
-    
+      <nav class="nav">
+        <a class="pill" href="index.html" data-i18n="nav.home">Главная</a>
+        <a class="pill" href="gallery.html" data-i18n="nav.gallery">Галерея</a>
+        <a class="pill" href="nft.html" data-i18n="nav.nft">NFT</a>
+        <a class="pill" href="manifest.html" data-i18n="nav.manifest">Манифест</a>
+        <a class="pill" href="poems.html" data-i18n="nav.poems">Стихи</a>
+        <a class="pill" href="songs.html" data-i18n="nav.songs">Песни</a>
+        <a class="pill" href="faq.html" data-i18n="nav.faq">FAQ</a>
+        <a class="pill" href="contacts.html" data-i18n="nav.contacts">Контакты</a>
+        <a class="pill" href="ai.html" data-i18n="nav.ai">AI</a>
+      </nav>
     </div>
   </header>
   <main class="wrap">
     <div id="fatal" class="small"></div>
-    
-<section class="card">
-  <h2>Manifest</h2>
-  <pre class="txt" id="manifest-article"></pre>
+
+<section class="card" data-lang="ru">
+  <h2>Манифест души</h2>
+  <pre class="txt">Я не рисую красоту — я рисую правду.
+Линия — это не украшение, это нерв.
+Сердце в центре каждой работы — не символ, это адрес.
+Хаос — не ошибка. Хаос — это честность материала.
+UV-слой — то, что видно только в темноте. Как внутреннее.
+Я не художник с дипломом. Я человек, который не смог не рисовать.
+Каждая работа — один момент, зафиксированный навсегда.
+Soul In PsyAbstract — это не стиль. Это — я.</pre>
+  <div class="small" style="margin-top:1.5rem;color:var(--muted)">— Aelin AquaSoul</div>
 </section>
 
-    <div class="footer">Aelin AquaSoul · Soul In PsyAbstract · “In the moment of panic, she still does the right thing.”</div>
+<section class="card" data-lang="en">
+  <h2>Manifest of the Soul</h2>
+  <pre class="txt">I don't paint beauty — I paint truth.
+A line is not decoration, it is a nerve.
+The heart at the center of every work is not a symbol — it is an address.
+Chaos is not a mistake. Chaos is the honesty of the material.
+The UV layer — what is visible only in darkness. Like what is within.
+I am not an artist with a diploma. I am a person who could not stop drawing.
+Every work is one moment, fixed forever.
+Soul In PsyAbstract is not a style. It is — me.</pre>
+  <div class="small" style="margin-top:1.5rem;color:var(--muted)">— Aelin AquaSoul</div>
+</section>
+
+    <div class="footer">Aelin AquaSoul · Soul In PsyAbstract · "In the moment of panic, she still does the right thing."</div>
   </main>
   <script src="assets/js/core.js"></script>
-  <script src="assets/js/text-pages.js"></script>
   <script src="assets/js/pwa.js"></script>
   <script>
     if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{});
   </script>
-<script src="/assets/js/page-assistant.js"></script>
-<script>console.log("SIPA assistant ready");</script>
+  <script src="assets/js/page-assistant.js"></script>
 </body>
 </html>
