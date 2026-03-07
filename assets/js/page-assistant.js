@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const widget = document.createElement('div');
   widget.id = 'page-assistant-widget';
-  widget.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:1000;font-family:-apple-system,BlinkMacSystemFont,sans-serif;';
+  widget.style.cssText = 'position:fixed;bottom:80px;right:16px;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,sans-serif;';
 
   const toggleBtn = document.createElement('button');
-  toggleBtn.innerHTML = '💬';
-  toggleBtn.style.cssText = 'width:50px;height:50px;border-radius:50%;background:#7ff3e7;color:#0a0d10;border:none;font-size:22px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:transform .2s;';
+  toggleBtn.innerHTML = '💬<span style="display:block;font-size:9px;font-weight:700;letter-spacing:.06em;margin-top:1px">SIPA</span>';
+  toggleBtn.style.cssText = 'width:60px;height:60px;border-radius:50%;background:#7ff3e7;color:#0a0d10;border:none;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(127,243,231,.5);transition:transform .2s;line-height:1;display:flex;flex-direction:column;align-items:center;justify-content:center;';
   toggleBtn.onmouseover = () => toggleBtn.style.transform = 'scale(1.1)';
   toggleBtn.onmouseout  = () => toggleBtn.style.transform = 'scale(1)';
 
