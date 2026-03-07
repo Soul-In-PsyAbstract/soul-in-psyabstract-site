@@ -333,3 +333,11 @@ pre.txt{
 }
 .hero-card__text { color:var(--muted); font-size:14px; line-height:1.5; }
 .contact-group { margin-bottom: 18px; } .contact-group h3 { font-size: 13px; color: var(--muted); margin-bottom: 8px; letter-spacing: .05em; }
+
+/* ── FAQ details/summary ──────────────────────────────────── */
+.faq-list details { border-bottom: 1px solid rgba(255,255,255,.07); padding: 12px 0; }
+.faq-list details:last-child { border-bottom: none; }
+.faq-list summary { cursor: pointer; font-size: 15px; font-weight: 600; color: var(--ink); list-style: none; padding-right: 20px; position: relative; }
+.faq-list summary::after { content: '+'; position: absolute; right: 0; top: 0; color: var(--aqua); font-size: 18px; line-height: 1; }
+.faq-list details[open] summary::after { content: '−'; }
+.faq-list details p { margin: 10px 0 4px; font-size: 14px; color: var(--muted); line-height: 1.7; }
