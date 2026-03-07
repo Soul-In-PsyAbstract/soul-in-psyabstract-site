@@ -38,8 +38,13 @@
   <main class="wrap">
     <div id="fatal" class="small"></div>
 
+<section class="card">
+  <h2 data-i18n="nav.songs">Песни</h2>
+  <div id="songs-html"></div>
+</section>
+
 <section class="card" data-lang="ru">
-  <h2>Песни</h2>
+  <h2>Тексты</h2>
 
   <h3 style="color:var(--accent);margin-bottom:.5rem">Любовь не знает правил</h3>
   <pre class="txt">[Куплет 1]
@@ -127,7 +132,7 @@
 </section>
 
 <section class="card" data-lang="en">
-  <h2>Songs</h2>
+  <h2>Lyrics</h2>
 
   <h3 style="color:var(--accent);margin-bottom:.5rem">Love Knows No Rules</h3>
   <pre class="txt">[Verse 1]
@@ -217,6 +222,7 @@ Without it, life's empty below.</pre>
     <div class="footer">Aelin AquaSoul · Soul In PsyAbstract · "In the moment of panic, she still does the right thing."</div>
   </main>
   <script src="assets/js/core.js"></script>
+  <script src="assets/js/text-pages.js"></script>
   <script src="assets/js/pwa.js"></script>
   <script>
     if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{});

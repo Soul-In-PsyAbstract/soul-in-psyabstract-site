@@ -57,16 +57,11 @@
       const title = lang==='ru' ? (art.title_ru || `NFT #${i+1}`) : (art.title_en || `NFT #${i+1}`);
       const card = document.createElement('article');
       card.className = 'art nft-card';
+      card.style.cssText = 'background:rgba(127,243,231,.06);border:1px solid rgba(127,243,231,.18);border-radius:8px;padding:1rem;display:flex;flex-direction:column;gap:.5rem;';
       card.innerHTML = `
-        <a href="${link}" target="_blank" rel="noopener">
-          <img loading="lazy" src="/assets/img/${file}" alt="${title}" onerror="this.style.opacity=.3">
-        </a>
-        <div class="meta">
-          <div class="title">${title}</div>
-          <div class="buybar">
-            <a class="btn primary" href="${link}" target="_blank" rel="noopener">Rarible →</a>
-          </div>
-        </div>
+        <div style="font-size:.7rem;color:var(--muted,#888);letter-spacing:.08em">NFT #${i+1} · ${link.includes('polygon')?'Polygon':'Ethereum'}</div>
+        <div style="font-weight:600;color:var(--accent,#7ff3e7)">${title}</div>
+        <a class="btn" href="${link}" target="_blank" rel="noopener" style="margin-top:.25rem;text-align:center">Rarible →</a>
       `;
       grid.appendChild(card);
     });
