@@ -22,36 +22,35 @@
           <button class="btn" id="kid-toggle">Ребёнок: OFF</button>
         </div>
       </div>
-      
-    <nav class="nav">
-      <a class="pill" href="index.html">Home</a>
-      <a class="pill" href="gallery.html">Gallery</a>
-      <a class="pill" href="nft.html">NFT</a>
-      <a class="pill" href="manifest.html">Manifest</a>
-      <a class="pill" href="poems.html">Poems</a>
-      <a class="pill" href="songs.html">Songs</a>
-      <a class="pill" href="faq.html">FAQ</a>
-      <a class="pill" href="contacts.html">Contacts</a>
-      <a class="pill" href="ai.html">AI</a>
-    </nav>
-    
+      <nav class="nav">
+        <a class="pill" href="index.html">Home</a>
+        <a class="pill" href="gallery.html">Gallery</a>
+        <a class="pill" href="nft.html">NFT</a>
+        <a class="pill active" href="manifest.html">Manifest</a>
+        <a class="pill" href="poems.html">Poems</a>
+        <a class="pill" href="songs.html">Songs</a>
+        <a class="pill" href="faq.html">FAQ</a>
+        <a class="pill" href="contacts.html">Contacts</a>
+        <a class="pill" href="ai.html">AI</a>
+      </nav>
     </div>
   </header>
   <main class="wrap">
     <div id="fatal" class="small"></div>
-    
-<section class="card">
-  <h2>Manifest</h2>
-  <pre class="txt" id="text-article"></pre>
-</section>
 
-    <div class="footer">Aelin AquaSoul · Soul In PsyAbstract · “In the moment of panic, she still does the right thing.”</div>
+    <section class="card" data-lang="ru">
+      <h2>Манифест</h2>
+      <pre class="txt" id="manifest-text-ru"><!-- MANIFEST RU TEXT PENDING --></pre>
+    </section>
+
+    <section class="card" data-lang="en">
+      <h2>Manifest</h2>
+      <pre class="txt" id="manifest-text-en"><!-- MANIFEST EN TEXT PENDING --></pre>
+    </section>
+
+    <div class="footer">Aelin AquaSoul · Soul In PsyAbstract · "In the moment of panic, she still does the right thing."</div>
   </main>
   <script src="assets/js/app.js"></script>
-  <script>
-    if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{});
-  </script>
 <script src="/assets/js/page-assistant.js"></script>
-<script>console.log("SIPA assistant ready");</script>
 </body>
 </html>
