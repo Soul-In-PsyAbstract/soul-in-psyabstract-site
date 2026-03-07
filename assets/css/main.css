@@ -332,3 +332,4 @@ pre.txt{
   box-shadow: 0 0 8px var(--aqua);
 }
 .hero-card__text { color:var(--muted); font-size:14px; line-height:1.5; }
+.contact-group { margin-bottom: 18px; } .contact-group h3 { font-size: 13px; color: var(--muted); margin-bottom: 8px; letter-spacing: .05em; }
