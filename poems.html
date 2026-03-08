@@ -7,6 +7,20 @@
   <link rel="stylesheet" href="assets/css/main.css?v=4">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#0a0d10">
+  <style>
+    .poem-wave {
+      display: flex;
+      justify-content: center;
+      margin: 1.4rem 0;
+    }
+    .poem-wave svg path {
+      animation: waveGlow 3s ease-in-out infinite;
+    }
+    @keyframes waveGlow {
+      0%, 100% { opacity: 0.55; filter: drop-shadow(0 0 3px rgba(127,243,231,.5)); }
+      50%       { opacity: 1;    filter: drop-shadow(0 0 9px rgba(127,243,231,.95)); }
+    }
+  </style>
 </head>
 <body data-page="poems">
   <header class="header">
@@ -452,5 +466,35 @@ Let my totems guide me through pain to strength, through chaos to myself.</pre>
     if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{});
   </script>
   <script src="assets/js/page-assistant.js"></script>
+  <script>
+    // Replace *** separators with aqua neon wave animation
+    (function() {
+      var WAVE = '<svg width="220" height="22" viewBox="0 0 220 22" xmlns="http://www.w3.org/2000/svg">' +
+        '<path d="M0,11 C18,3 36,19 55,11 C73,3 91,19 110,11 C128,3 146,19 165,11 C183,3 201,19 220,11"' +
+        ' fill="none" stroke="#7ff3e7" stroke-width="1.5" stroke-linecap="round"/></svg>';
+      document.querySelectorAll('pre.txt').forEach(function(pre) {
+        var text = pre.textContent;
+        if (text.indexOf('***') === -1) return;
+        var parts = text.split(/\s*\*\*\*\s*/);
+        var frag = document.createDocumentFragment();
+        var first = true;
+        parts.forEach(function(part) {
+          if (!part.trim()) return;
+          if (!first) {
+            var w = document.createElement('div');
+            w.className = 'poem-wave';
+            w.innerHTML = WAVE;
+            frag.appendChild(w);
+          }
+          var p = document.createElement('pre');
+          p.className = 'txt';
+          p.textContent = part.replace(/^\n+/, '').replace(/\n+$/, '');
+          frag.appendChild(p);
+          first = false;
+        });
+        pre.parentNode.replaceChild(frag, pre);
+      });
+    })();
+  </script>
 </body>
 </html>
