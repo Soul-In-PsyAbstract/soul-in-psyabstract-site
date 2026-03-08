@@ -170,6 +170,7 @@
         out.innerHTML = log.map(function(l){ return l; }).join('\n') + '\n<span class="blink">_</span>';
         out.scrollTop = out.scrollHeight;
       }
+      var _sid = localStorage.getItem('sipa_ai_session') || '';
       async function exec(){
         var msg = inp.value.trim();
         if(!msg) return;
@@ -179,11 +180,16 @@
         log.push('<span style="color:#fbbf24">[PROCESSING] Protocol 0 · querying Haiku...</span>');
         render();
         try {
-          var r = await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,page:'ai'})});
+          var body = {message:msg,page:'ai'};
+          if(_sid) body.session_id = _sid;
+          var r = await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
           var d = await r.json();
+          if(d.session_id){ _sid = d.session_id; localStorage.setItem('sipa_ai_session', _sid); }
           log.pop();
-          log.push('<span style="color:#4ade80">['+ts()+'] RESULT:</span>');
-          log.push('<span style="color:#e2e8f0">'+escH(d.reply||'no response')+'</span>');
+          if(!d.silent){
+            log.push('<span style="color:#4ade80">['+ts()+'] RESULT:</span>');
+            log.push('<span style="color:#e2e8f0">'+escH(d.reply||'')+'</span>');
+          }
         } catch(e) {
           log.pop();
           log.push('<span style="color:#f87171">[ERROR] '+escH(e.message)+'</span>');
