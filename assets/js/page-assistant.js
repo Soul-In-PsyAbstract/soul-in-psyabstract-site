@@ -59,6 +59,12 @@ document.addEventListener('DOMContentLoaded', function() {
   widget.append(toggleBtn, chatBox);
   document.body.appendChild(widget);
 
+  // Restore L2 panel if session was L2
+  if (localStorage.getItem('sipa_l2') === '1') {
+    const sid = localStorage.getItem('sipa_session_id') || '';
+    setTimeout(() => activateL2(sid), 100);
+  }
+
   toggleBtn.addEventListener('click', () => {
     const open = chatBox.style.display === 'block';
     chatBox.style.display = open ? 'none' : 'block';
@@ -67,8 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   newBtn.addEventListener('click', () => {
     localStorage.removeItem('sipa_session_id');
+    localStorage.removeItem('sipa_l2');
     msgs.innerHTML = '';
     addMsg('New topic started ✦');
+    const p = document.getElementById('sipa-l2-panel');
+    if (p) p.remove();
   });
 
   function addMsg(text, isUser) {
@@ -105,8 +114,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       const d = await r.json();
       if (d.session_id) localStorage.setItem('sipa_session_id', d.session_id);
-      if (d.l2) activateL2(d.session_id);
-      addMsg(d.reply || 'Thank you!');
+      if (d.l2) { localStorage.setItem('sipa_l2', '1'); activateL2(d.session_id); }
+      if (!d.silent) addMsg(d.reply || 'Thank you!');
     } catch(e) {
       addMsg('Coming soon ✦');
     } finally {
