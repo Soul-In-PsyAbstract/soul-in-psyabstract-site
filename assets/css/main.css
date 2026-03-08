@@ -303,8 +303,8 @@ pre.txt{
   height: 36px;
   accent-color: var(--aqua);
 }
-/* songs-root list styling */
-#songs-root p {
+/* songs-html list styling (loaded via text-pages.js into #songs-html) */
+#songs-html p, #songs-root p {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -314,11 +314,11 @@ pre.txt{
   background: rgba(255,255,255,.02);
   margin-bottom: 10px;
 }
-#songs-root p b {
+#songs-html p b, #songs-root p b {
   font-size: 15px;
   color: var(--aqua);
 }
-#songs-root audio {
+#songs-html audio, #songs-root audio {
   width: 100%;
   accent-color: var(--aqua);
 }
