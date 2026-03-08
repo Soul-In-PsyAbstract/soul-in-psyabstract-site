@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       const d = await r.json();
       if (d.session_id) localStorage.setItem('sipa_session_id', d.session_id);
+      if (d.l2) activateL2(d.session_id);
       addMsg(d.reply || 'Thank you!');
     } catch(e) {
       addMsg('Coming soon ✦');
@@ -112,6 +113,48 @@ document.addEventListener('DOMContentLoaded', function() {
       btn.disabled = false;
       btn.textContent = 'Send';
     }
+  }
+
+  // L2 Architect mode — submit panel
+  function activateL2(sid) {
+    if (document.getElementById('sipa-l2-panel')) return;
+    const panel = document.createElement('div');
+    panel.id = 'sipa-l2-panel';
+    panel.style.cssText = 'margin-top:10px;padding:10px;background:rgba(127,243,231,.07);border:1px solid rgba(127,243,231,.3);border-radius:6px;';
+    panel.innerHTML = '<div style="color:#7ff3e7;font-size:11px;font-weight:700;letter-spacing:.06em;margin-bottom:8px;">✦ АРХИТЕКТОР · L2</div>';
+    const types = ['note','report','audit','protocol','raw'];
+    const sel = document.createElement('select');
+    sel.style.cssText = 'width:100%;background:rgba(0,0,0,.4);border:1px solid rgba(127,243,231,.3);color:#e8f2ff;border-radius:4px;padding:4px 6px;font-size:12px;margin-bottom:6px;';
+    types.forEach(t => { const o = document.createElement('option'); o.value=t; o.textContent=t.toUpperCase(); sel.appendChild(o); });
+    const txt = document.createElement('textarea');
+    txt.placeholder = 'Заметка / репорт / аудит...';
+    txt.style.cssText = 'width:100%;height:60px;background:rgba(0,0,0,.3);border:1px solid rgba(127,243,231,.3);color:#fff;font-size:12px;border-radius:4px;padding:6px;resize:none;box-sizing:border-box;margin-bottom:6px;';
+    const tagIn = document.createElement('input');
+    tagIn.placeholder = 'TAG (необязательно)';
+    tagIn.style.cssText = 'width:100%;background:rgba(0,0,0,.3);border:1px solid rgba(127,243,231,.2);color:#a6b4c6;font-size:11px;border-radius:4px;padding:4px 6px;box-sizing:border-box;margin-bottom:6px;';
+    const sbtn = document.createElement('button');
+    sbtn.textContent = 'Отправить → SIPA';
+    sbtn.style.cssText = 'width:100%;padding:6px;background:rgba(127,243,231,.2);color:#7ff3e7;border:1px solid rgba(127,243,231,.4);border-radius:4px;font-size:12px;font-weight:700;cursor:pointer;';
+    const status = document.createElement('div');
+    status.style.cssText = 'font-size:11px;color:#7ff3e7;min-height:16px;';
+    sbtn.addEventListener('click', async () => {
+      if (!txt.value.trim()) return;
+      sbtn.disabled = true; sbtn.textContent = '...';
+      try {
+        const r = await fetch('/api/report', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ session_id: sid, type: sel.value, content: txt.value.trim(), tag: tagIn.value.trim() })
+        });
+        const d = await r.json();
+        if (d.status === 'ACCEPTED') {
+          status.textContent = '✓ Принято · sha:' + d.sha;
+          txt.value = ''; tagIn.value = '';
+        } else { status.textContent = '✗ ' + (d.error||'ошибка'); }
+      } catch(e) { status.textContent = '✗ нет связи'; }
+      sbtn.disabled = false; sbtn.textContent = 'Отправить → SIPA';
+    });
+    panel.append(sel, txt, tagIn, sbtn, status);
+    chatBox.appendChild(panel);
   }
 
   btn.addEventListener('click', send);
