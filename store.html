@@ -1072,6 +1072,10 @@ function setLang(lang) {
     const el = document.getElementById(`sec-title-${s}`);
     if(el) el.textContent = SEC_TITLES[s][lang];
   });
+  // Update shipping spans
+  document.querySelectorAll('[data-ru],[data-en],[data-he]').forEach(el => {
+    el.style.display = el.hasAttribute('data-'+lang.toLowerCase()) ? '' : 'none';
+  });
   // Update modal if open
   if(currentProductId) renderModal();
 }
