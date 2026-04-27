@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIPA OS V11 — System Map</title>
+<style>
+  :root {
+    --bg:       #0a0a0f;
+    --bg2:      #111118;
+    --bg3:      #1a1a24;
+    --border:   #2a2a3a;
+    --accent:   #7b5ea7;
+    --accent2:  #4ecdc4;
+    --accent3:  #f7b731;
+    --green:    #2ecc71;
+    --red:      #e74c3c;
+    --text:     #d0d0e0;
+    --text2:    #8888aa;
+    --text3:    #555570;
+    --mono:     'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 40px 20px;
+  }
+
+  .page { max-width: 1100px; margin: 0 auto; }
+
+  /* ── HEADER ── */
+  .header {
+    border: 1px solid var(--accent);
+    padding: 30px 36px;
+    margin-bottom: 32px;
+    position: relative;
+    background: linear-gradient(135deg, #0e0e1a 0%, #1a0e2a 100%);
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+  }
+  .header h1 {
+    font-size: 24px;
+    letter-spacing: 4px;
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .header h1 span { color: var(--accent2); }
+  .header .subtitle {
+    color: var(--text2);
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+  .header .meta {
+    margin-top: 16px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .header .meta-item { color: var(--text2); font-size: 11px; }
+  .header .meta-item strong { color: var(--accent3); }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 28px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .section-header {
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-header .label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text2);
+  }
+  .section-header .title {
+    color: var(--accent2);
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  .section-body { padding: 18px; }
+
+  /* ── GRID ── */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+  /* ── NODE CARD ── */
+  .node-card {
+    border: 1px solid var(--border);
+    padding: 16px;
+    background: var(--bg3);
+    position: relative;
+  }
+  .node-card.primary { border-color: var(--accent2); }
+  .node-card.secondary { border-color: var(--accent); }
+  .node-card.backup { border-color: var(--text3); }
+  .node-card .node-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .node-card .node-type { color: var(--text2); font-size: 10px; letter-spacing: 2px; margin-bottom: 12px; }
+  .node-card .node-stat { color: var(--text); font-size: 12px; margin-bottom: 3px; }
+  .node-card .node-stat .key { color: var(--text2); }
+  .node-card .status-dot {
+    position: absolute; top: 12px; right: 12px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+  }
+  .node-card .status-dot.pending { background: var(--accent3); box-shadow: 0 0 8px var(--accent3); }
+
+  /* ── CYCLE ── */
+  .cycle-row {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 10px;
+    gap: 0;
+  }
+  .cycle-time {
+    color: var(--accent3);
+    font-size: 14px;
+    font-weight: bold;
+    width: 70px;
+    flex-shrink: 0;
+    padding: 10px 0;
+  }
+  .cycle-arrow {
+    color: var(--text3);
+    padding: 10px 8px;
+    flex-shrink: 0;
+  }
+  .cycle-card {
+    flex: 1;
+    border: 1px solid var(--border);
+    padding: 10px 16px;
+    background: var(--bg3);
+  }
+  .cycle-card .script { color: var(--accent2); font-weight: bold; }
+  .cycle-card .desc { color: var(--text2); font-size: 11px; margin-top: 2px; }
+  .cycle-card .hash { color: var(--text3); font-size: 10px; }
+
+  /* ── SCRIPT TABLE ── */
+  .script-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #1e1e2a;
+    gap: 16px;
+  }
+  .script-row:last-child { border-bottom: none; }
+  .script-name { color: var(--accent2); font-weight: bold; min-width: 260px; font-size: 12px; }
+  .script-hash { color: var(--text3); font-size: 11px; min-width: 80px; }
+  .script-desc { color: var(--text2); font-size: 11px; flex: 1; }
+  .script-nodes { font-size: 10px; }
+  .ok { color: var(--green); }
+  .pending { color: var(--accent3); }
+
+  /* ── HUB GRID ── */
+  .hub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 6px;
+  }
+  .hub-item {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    background: var(--bg3);
+    font-size: 11px;
+  }
+  .hub-item .hub-name { color: var(--text); font-weight: bold; }
+  .hub-item .hub-tier { color: var(--text3); font-size: 10px; }
+  .hub-item.tier0 { border-left: 2px solid #e74c3c; }
+  .hub-item.tier1 { border-left: 2px solid #e67e22; }
+  .hub-item.tier2 { border-left: 2px solid var(--accent); }
+  .hub-item.tier3 { border-left: 2px solid var(--accent2); }
+  .hub-item.tier4 { border-left: 2px solid #3498db; }
+  .hub-item.tier5 { border-left: 2px solid #2ecc71; }
+  .hub-item.tier6 { border-left: 2px solid var(--text3); }
+  .hub-item.special { border-left: 2px solid var(--accent3); }
+
+  /* ── SPHERE ── */
+  .sphere-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+  }
+  .substance {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    background: var(--bg3);
+  }
+  .substance .num { color: var(--text3); font-size: 10px; }
+  .substance .name { color: var(--accent); font-weight: bold; font-size: 12px; }
+  .substance .desc { color: var(--text2); font-size: 10px; margin-top: 4px; line-height: 1.4; }
+
+  /* ── CRON ── */
+  .cron-row {
+    display: flex;
+    gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px solid #1a1a28;
+    align-items: baseline;
+  }
+  .cron-row:last-child { border-bottom: none; }
+  .cron-expr { color: var(--accent3); font-size: 11px; min-width: 130px; }
+  .cron-script { color: var(--accent2); font-size: 11px; min-width: 240px; }
+  .cron-desc { color: var(--text2); font-size: 11px; }
+
+  /* ── ZTP ── */
+  .ztp-block {
+    border: 1px solid var(--accent);
+    padding: 20px;
+    background: #0e0e1a;
+  }
+  .ztp-block .ztp-title {
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-bottom: 14px;
+  }
+  .ztp-rule {
+    color: var(--text);
+    font-size: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid #1a1a28;
+    display: flex;
+    gap: 12px;
+  }
+  .ztp-rule:last-child { border-bottom: none; }
+  .ztp-num { color: var(--text3); min-width: 24px; }
+
+  /* ── GRANT TABLE ── */
+  .grant-row {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #1a1a28;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .grant-row:last-child { border-bottom: none; }
+  .grant-status { font-size: 11px; min-width: 20px; }
+  .grant-name { color: var(--text); font-size: 12px; flex: 1; min-width: 200px; }
+  .grant-amount { color: var(--accent3); font-size: 11px; min-width: 100px; }
+  .grant-date { color: var(--text3); font-size: 11px; min-width: 100px; }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 40px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    color: var(--text3);
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag { display: inline-block; padding: 2px 8px; font-size: 10px; letter-spacing: 1px;
+         border: 1px solid; margin: 1px; }
+  .tag.green { border-color: var(--green); color: var(--green); }
+  .tag.yellow { border-color: var(--accent3); color: var(--accent3); }
+  .tag.purple { border-color: var(--accent); color: var(--accent); }
+  .tag.teal { border-color: var(--accent2); color: var(--accent2); }
+
+  @media (max-width: 700px) {
+    .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .cycle-row { flex-direction: column; }
+    .cycle-time { width: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>SIPA OS <span>V11</span> — SYSTEM MAP</h1>
+    <div class="subtitle">SOUL IN PSYABSTRACT OPERATING SYSTEM · FULL AUTONOMY ERA</div>
+    <div class="meta">
+      <div class="meta-item"><strong>Architect</strong> Aelin AquaSoul</div>
+      <div class="meta-item"><strong>Version</strong> V11 · SESSION-56</div>
+      <div class="meta-item"><strong>Date</strong> 2026-04-27</div>
+      <div class="meta-item"><strong>Uptime</strong> Since 2026-01-25 · 38+ days</div>
+      <div class="meta-item"><strong>Nodes</strong> 3 (SERVER + 15T + X7)</div>
+      <div class="meta-item"><strong>Hubs</strong> 38</div>
+      <div class="meta-item"><strong>Files</strong> 70,000+</div>
+      <div class="meta-item"><strong>ALERTS</strong> 0</div>
+    </div>
+  </div>
+
+  <!-- NODE TOPOLOGY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="label">01</span>
+      <span class="title">NODE TOPOLOGY — 3-NODE DISTRIBUTED SYSTEM</span>
+    </div>
+    <div class="section-body">
+      <div class="grid-3">
+        <div class="node-card primary">
+          <div class="status-dot"></div>
+          <div class="node-name">SERVER</div>
+          <div class="node-type">PRIMARY INFRASTRUCTURE</div>
+          <div class="node-stat"><span class="key">Device: </span>Lenovo ThinkCentre i5</div>
+          <div class="node-stat"><span class="key">OS: </span>Ubuntu 24.04 LTS</div>
+          <div class="node-stat"><span class="key">Root: </span>/home/sipa/PROJECT/PAYTON_HUBS</div>
+          <div class="node-stat"><span class="key">IP: </span>172.27.22.217 (ZeroTier)</div>
+          <div class="node-stat"><span class="key">Disk: </span>392GB · 25% used</div>
+          <div class="node-stat"><span class="key">Cron: </span>systemd timers (12 active)</div>
+          <div class="node-stat"><span class="key">GUARDIAN: </span><span class="ok">ALERTS=0 ✅</span></div>
+          <div style="margin-top:10px">
+            <span class="tag green">ACTIVE</span>
+            <span class="tag teal">MASTER NODE</span>
+            <span class="tag purple">V11 CRON</span>
+          </div>
+        </div>
+        <div class="node-card secondary">
+          <div class="status-dot"></div>
+          <div class="node-name">15T</div>
+          <div class="node-type">PRIMARY WORKSTATION</div>
+          <div class="node-stat"><span class="key">Device: </span>Xiaomi 15T</div>
+          <div class="node-stat"><span class="key">OS: </span>Android 16 · Termux</div>
+          <div class="node-stat"><span class="key">Root: </span>/storage/emulated/0/PROJECT/PAYTON_HUBS</div>
+          <div class="node-stat"><span class="key">IP: </span>172.27.24.2:8022</div>
+          <div class="node-stat"><span class="key">RAM: </span>8+8GB · Dimensity 8400-Ultra</div>
+          <div class="node-stat"><span class="key">SSH: </span>sipa@172.27.24.2 -p 8022 ✅</div>
+          <div class="node-stat"><span class="key">GUARDIAN: </span><span class="ok">ALERTS=0 ✅</span></div>
+          <div style="margin-top:10px">
+            <span class="tag green">ACTIVE</span>
+            <span class="tag teal">FULL CRON</span>
+            <span class="tag purple">SYNC_PULL 0 */2</span>
+          </div>
+        </div>
+        <div class="node-card backup">
+          <div class="status-dot pending"></div>
+          <div class="node-name">X7</div>
+          <div class="node-type">BACKUP NODE</div>
+          <div class="node-stat"><span class="key">Device: </span>POCO X7 Pro</div>
+          <div class="node-stat"><span class="key">OS: </span>Android 16 · Termux</div>
+          <div class="node-stat"><span class="key">Root: </span>/storage/emulated/0/PROJECT/PAYTON_HUBS</div>
+          <div class="node-stat"><span class="key">IP: </span>172.27.248.199</div>
+          <div class="node-stat"><span class="key">SSH: </span>reverse tunnel SERVER:19122</div>
+          <div class="node-stat"><span class="key">GUARDIAN: </span><span class="ok">ALERTS=0 ✅</span></div>
+          <div style="margin-top:10px">
+            <span class="tag green">ACTIVE</span>
+            <span class="tag yellow">BACKUP</span>
+            <span class="tag purple">SYNC_PULL 0 */2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- V11 DAILY CYCLE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="label">02</span>
+      <span class="title">V11 DAILY AUTONOMY CYCLE — SERVER (05:00 – 09:00 IST)</span>
+    </div>
+    <div class="section-body">
+      <div class="cycle-row">
+        <div class="cycle-time">05:00</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-card">
+          <div class="script">MASTER_GUARDIAN.sh</div>
+          <div class="desc">38-hub health check · CRITICAL / STALE / ABSENT detection · writes MASTER_GUARDIAN_STATUS.log.status</div>
+        </div>
+      </div>
+      <div class="cycle-row">
+        <div class="cycle-time">06:00</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-card">
+          <div class="script">MASTER_MANIFEST.sh</div>
+          <div class="desc">File inventory across all hubs · sha256 chain detection · MASTER_MANIFEST_SHORT__DATE.tsv</div>
+        </div>
+      </div>
+      <div class="cycle-row">
+        <div class="cycle-time">07:00</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-card">
+          <div class="script">MASTER_REPORT.sh</div>
+          <div class="desc">Daily markdown report · synthesizes GUARDIAN + MANIFEST data → DAILY_REPORT__DATE.md</div>
+        </div>
+      </div>
+      <div class="cycle-row">
+        <div class="cycle-time">08:00</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-card">
+          <div class="script">V11_AUTONOMY_EXEC.sh</div>
+          <div class="desc">Reads MASTER_GUARDIAN_STATUS → executes corrective actions automatically:
+            A1 CRITICAL/STALE → ALL_HUBS_STEWARD cycle ·
+            A2 chains → clean ·
+            A3 GUARDIAN alerts → heal ·
+            A4 disk ≥85% → prune RUNTIME_WORKSPACE</div>
+          <div class="hash">hash: 0fb229f7</div>
+        </div>
+      </div>
+      <div class="cycle-row">
+        <div class="cycle-time">09:00</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-card">
+          <div class="script">SIPA_EXECUTOR.sh batch_recheck all</div>
+          <div class="desc">SHA256 audit + HEAL across all 38 hubs ·
+            no sha256 → CREATE ·
+            mismatch → HEAL (update to actual) ·
+            orphaned sha256 → TRASH ·
+            First run: checked=6306 created=3892 healed=91</div>
+          <div class="hash">hash: add9301d</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPHERE — 14 SUBSTANCES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="label">03</span>
+      <span class="title">SIPA_GUARD_SPHERE — 14 AUTONOMOUS SUBSYSTEMS · hash: 4aa3c116</span>
+    </div>
+    <div class="section-body">
+      <div class="sphere-grid">
+        <div class="substance"><div class="num">01</div><div class="name">WATCH</div><div class="desc">crond · heartbeat · log freshness · BOOT today verification</div></div>
+        <div class="substance"><div class="num">02</div><div class="name">GATE</div><div class="desc">Incoming file control · 10 checks · ≥70% pass threshold</div></div>
+        <div class="substance"><div class="num">03</div><div class="name">GUARD</div><div class="desc">sha256 duplicate detection · code 2 = duplicate → rewrite only</div></div>
+        <div class="substance"><div class="num">04</div><div class="name">REWRITE</div><div class="desc">Pre-rewrite history archive → _REWRITE_HISTORY/</div></div>
+        <div class="substance"><div class="num">05</div><div class="name">FIXATOR</div><div class="desc">sha256 + TAG file generation for every artifact</div></div>
+        <div class="substance"><div class="num">06</div><div class="name">FORENSIC</div><div class="desc">fixate + manifest_update + AUDIT_MIRROR</div></div>
+        <div class="substance"><div class="num">07</div><div class="name">EXECUTOR</div><div class="desc">gate → guard → deploy → forensic → manifest → broadcast pipeline</div></div>
+        <div class="substance"><div class="num">08</div><div class="name">WATCHDOG</div><div class="desc">heal_crond + heal_heartbeat automatic recovery</div></div>
+        <div class="substance"><div class="num">09</div><div class="name">BROADCAST</div><div class="desc">BROADCAST.log + canon mirror → AUDIT_MIRROR</div></div>
+        <div class="substance"><div class="num">10</div><div class="name">HUB ROUTER</div><div class="desc">Auto-routing by filename → 35 patterns → correct hub</div></div>
+        <div class="substance"><div class="num">11</div><div class="name">MANIFEST</div><div class="desc">LONG + SHORT TSV manifest update on every change</div></div>
+        <div class="substance"><div class="num">12</div><div class="name">SYNC</div><div class="desc">scp through Gate · X7↔15T↔SERVER synchronization</div></div>
+        <div class="substance"><div class="num">13</div><div class="name">STATUS</div><div class="desc">Full sphere report · all subsystems · health summary</div></div>
+        <div class="substance"><div class="num">14</div><div class="name">FULL_CYCLE</div><div class="desc">watch + watchdog + manifest · cron 0 */4 · all three nodes</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUARDIAN — 14 CHECKS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="label">04</span>
+      <span class="title">SIPA_GUARDIAN V1.6 — 14 CHECKS · cron */15 · heal mode · hash: e810e483</span>
+    </div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C01</div><div class="script-desc">crond running</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C02</div><div class="script-desc">heartbeat freshness (≤45min)</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C03</div><div class="script-desc">sphere.log freshness (≤5h)</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C04</div><div class="script-desc">GUARDIAN.log write access</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C05</div><div class="script-desc">BOOT today exists</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C06</div><div class="script-desc">AUDIT log append-only</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C07</div><div class="script-desc">CLAUDE.md hash = EXPECTED (d1fa3320)</div></div>
+        </div>
+        <div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C08</div><div class="script-desc">SPHERE hash = 4aa3c116</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C09</div><div class="script-desc">BIN/ integrity (key scripts sha256)</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C10</div><div class="script-desc">HUB_LEGAL_FORENSIC accessible</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C11</div><div class="script-desc">disk usage (≤90%)</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C12</div><div class="script-desc">MLL log freshness (≤5h)</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C13</div><div class="script-desc">RUNTIME dir writable</div></div>
+          <div class="script-row"><div class="script-name" style="min-width:auto;color:var(--text)">C14</div><div class="script-desc">phone: BIN integrity fail → SYNC_PULL_FROM_SERVER (auto-heal)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY SCRIPTS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="label">05</span>
+      <span class="title">CANONICAL SCRIPTS — BIN/ · SESSION-56</span>
+    </div>
+    <div class="section-body">
+      <div class="script-row">
+        <div class="script-name">SIPA_GUARD_SPHERE.sh</div>
+        <div class="script-hash">4aa3c116</div>
+        <div class="script-desc">V2.5 · 14-subsystem autonomous sphere · hub_route V3.0 · 35 patterns · cron 0 */4</div>
+        <div class="script-nodes"><span class="ok">S✅</span> <span class="ok">15T✅</span> <span class="ok">X7✅</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">SIPA_GUARDIAN.sh</div>
+        <div class="script-hash">e810e483</div>
+        <div class="script-desc">V1.6 · 14 checks · heal mode · +BIN integrity heal→SYNC_PULL (phone) · cron */15</div>
+        <div class="script-nodes"><span class="ok">S✅</span> <span class="ok">15T✅</span> <span class="pending">X7⏳</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">V11_AUTONOMY_EXEC.sh</div>
+        <div class="script-hash">0fb229f7</div>
+        <div class="script-desc">V1.0 · V11 full autonomy · reads MASTER_GUARDIAN → acts · cron 0 8 SERVER</div>
+        <div class="script-nodes"><span class="ok">S✅</span> <span class="ok">15T✅</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">SIPA_EXECUTOR.sh</div>
+        <div class="script-hash">add9301d</div>
+        <div class="script-desc">V1.0 · batch_recheck · SHA256 audit+HEAL · 38 hubs · cron 0 9 SERVER</div>
+        <div class="script-nodes"><span class="ok">S✅</span> <span class="ok">15T✅</span> <span class="pending">X7⏳</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">FILE_GATE.sh</div>
+        <div class="script-hash">272dca2d</div>
+        <div class="script-desc">V9.1 · 10 checks · M1-M5 mandatory + S1-S6 scored · ≥70% pass</div>
+        <div class="script-nodes"><span class="ok">S✅</span> <span class="ok">15T✅</span> <span class="ok">X7✅</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">ALL_HUBS_STEWARD.sh</div>
+        <div class="script-hash">eb7f4168</div>
+        <div class="script-desc">V1.0 · hub lifecycle orchestrator · cycle+clean · cron 0 */8</div>
+        <div class="script-nodes"><span class="ok">S✅</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">MASTER_GUARDIAN.sh</div>
+        <div class="script-hash">—</div>
+        <div class="script-desc">V1.0 · 38-hub health check · cron 0 5 SERVER · writes .status</div>
+        <div class="script-nodes"><span class="ok">S✅</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">MASTER_MANIFEST.sh</div>
+        <div class="script-hash">—</div>
+        <div class="script-desc">V1.0 · manifest short TSV · cron 0 6 SERVER</div>
+        <div class="script-nodes"><span class="ok">S✅</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">MASTER_REPORT.sh</div>
+        <div class="script-hash">—</div>
+        <div class="script-desc">V1.0 · daily markdown report · cron 0 7 SERVER</div>
+        <div class="script-nodes"><span class="ok">S✅</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">SYNC_PULL_FROM_SERVER.sh</div>
+        <div class="script-hash">a21ad1ad</div>
+        <div class="script-desc">V2.9 · pulls canonical files from SERVER → phones · cron 0 */2</div>
+        <div class="script-nodes"><span class="ok">15T✅</span> <span class="ok">X7✅</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">MLL_CORE.py</div>
+        <div class="script-hash">5ec91cb1</div>
+        <div class="script-desc">V1.4 · MLL L3 engine · trend+disk+guardian analysis · cron 30 */4</div>
+        <div class="script-nodes"><span class="ok">S✅</span> <span class="ok">15T✅</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">BROADCAST_ENGINE.sh</div>
+        <div class="script-hash">826b354a</div>
+        <div class="script-desc">V2.0 · peer-to-peer broadcast + HUB_ROUTER · 15T IP=172.27.24.2</div>
+        <div class="script-nodes"><span class="ok">S✅</span> <span class="ok">15T✅</span> <span class="ok">X7✅</span></div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">ask.sh</div>
+        <div class="script-hash">—</div>
+        <div class="script-desc">V3.1 · multi-model: deepseek/claude/claude-s/gpt/gpt4/gemini · API wrapper</div>
+        <div class="script-nodes"><span class="ok">S✅</span> <span class="ok">15T✅</span> <span class="pending">X7⏳</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL CRON SCHEDULE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="label">06</span>
+      <span class="title">CRON SCHEDULE — ALL NODES</span>
+    </div>
+    <div class="section-body">
+      <div class="cron-row"><div class="cron-expr">*/15 * * * *</div><div class="cron-script">SIPA_GUARDIAN.sh heal</div><div class="cron-desc">14-check supervisor · heal mode · all nodes</div></div>
+      <div class="cron-row"><div class="cron-expr">0 */4 * * *</div><div class="cron-script">SIPA_GUARD_SPHERE.sh full_cycle</div><div class="cron-desc">14-subsystem sphere · all nodes</div></div>
+      <div class="cron-row"><div class="cron-expr">30 */4 * * *</div><div class="cron-script">MLL_CORE.py</div><div class="cron-desc">ML layer · trend + anomaly analysis</div></div>
+      <div class="cron-row"><div class="cron-expr">0 */2 * * *</div><div class="cron-script">SYNC_PULL_FROM_SERVER.sh</div><div class="cron-desc">Pull canonical files SERVER→phone · 15T + X7</div></div>
+      <div class="cron-row"><div class="cron-expr">0 */8 * * *</div><div class="cron-script">ALL_HUBS_STEWARD.sh cycle</div><div class="cron-desc">Hub lifecycle · manifest + alerts · SERVER</div></div>
+      <div class="cron-row"><div class="cron-expr">15 * * * *</div><div class="cron-script">FILE_SANITIZE.sh</div><div class="cron-desc">File sanitation · all nodes</div></div>
+      <div class="cron-row"><div class="cron-expr">1 0 * * *</div><div class="cron-script">DAY_BOOT.sh</div><div class="cron-desc">Daily open · 7 artifacts · all nodes</div></div>
+      <div class="cron-row"><div class="cron-expr">59 23 * * *</div><div class="cron-script">DAY_CLOSE.sh</div><div class="cron-desc">Daily close · summary + heartbeat · all nodes</div></div>
+      <div class="cron-row"><div class="cron-expr">0 5 * * *</div><div class="cron-script">MASTER_GUARDIAN.sh</div><div class="cron-desc">38-hub health check · SERVER</div></div>
+      <div class="cron-row"><div class="cron-expr">0 6 * * *</div><div class="cron-script">MASTER_MANIFEST.sh</div><div class="cron-desc">Manifest short TSV · SERVER</div></div>
+      <div class="cron-row"><div class="cron-expr">0 7 * * *</div><div class="cron-script">MASTER_REPORT.sh</div><div class="cron-desc">Daily markdown report · SERVER</div></div>
+      <div class="cron-row"><div class="cron-expr">0 8 * * *</div><div class="cron-script">V11_AUTONOMY_EXEC.sh</div><div class="cron-desc">V11 autonomy · reads status → acts · SERVER</div></div>
+      <div class="cron-row"><div class="cron-expr">0 9 * * *</div><div class="cron-script">SIPA_EXECUTOR.sh batch_recheck all</div><div class="cron-desc">SHA256 audit + HEAL · 38 hubs · SERVER</div></div>
+      <div class="cron-row"><div class="cron-expr">*/30 * * * *</div><div class="cron-script">heartbeat.sh · SIPA_HEART_UPDATE.sh</div><div class="cron-desc">Proof of life · → HEARTBEAT.log + CF KV · all nodes</div></div>
+    </div>
+  </div>
+
+  <!-- 38 HUBS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="label">07</span>
+      <span class="title">38-HUB ARCHITECTURE — CONTENT ROUTING</span>
+    </div>
+    <div class="section-body">
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-size:10px;">
+        <span><span style="display:inline-block;width:8px;height:8px;background:#e74c3c;margin-right:4px;"></span>Tier 0 — Core governance</span>
+        <span><span style="display:inline-block;width:8px;height:8px;background:#e67e22;margin-right:4px;"></span>Tier 1 — Active systems</span>
+        <span><span style="display:inline-block;width:8px;height:8px;background:var(--accent);margin-right:4px;"></span>Tier 2 — Creative output</span>
+        <span><span style="display:inline-block;width:8px;height:8px;background:var(--accent2);margin-right:4px;"></span>Tier 3 — Publications</span>
+        <span><span style="display:inline-block;width:8px;height:8px;background:#3498db;margin-right:4px;"></span>Tier 4 — Research/grants</span>
+        <span><span style="display:inline-block;width:8px;height:8px;background:#2ecc71;margin-right:4px;"></span>Tier 5 — Institutional</span>
+        <span><span style="display:inline-block;width:8px;height:8px;background:var(--text3);margin-right:4px;"></span>Tier 6 — Format storage</span>
+        <span><span style="display:inline-block;width:8px;height:8px;background:var(--accent3);margin-right:4px;"></span>Special</span>
+      </div>
+      <div class="hub-grid">
+        <div class="hub-item tier0"><div class="hub-name">HUB_CORE_CANON</div><div class="hub-tier">TIER 0 · Canon artifacts · CLAUDE.md</div></div>
+        <div class="hub-item tier0"><div class="hub-name">HUB_GOVERNANCE</div><div class="hub-tier">TIER 0 · Rules · ZTP · declarations</div></div>
+        <div class="hub-item tier0"><div class="hub-name">HUB_GOVERNANCE_PROFILE</div><div class="hub-tier">TIER 0 · AI interaction protocols</div></div>
+        <div class="hub-item tier0"><div class="hub-name">HUB_LEGAL_FORENSIC</div><div class="hub-tier">TIER 0 · Audit logs · RUNTIME/</div></div>
+        <div class="hub-item tier1"><div class="hub-name">HUB_CODE_FILE</div><div class="hub-tier">TIER 1 · Scripts · BIN/ artifacts</div></div>
+        <div class="hub-item tier1"><div class="hub-name">HUB_AI_MLL</div><div class="hub-tier">TIER 1 · MLL engine · AI layer</div></div>
+        <div class="hub-item tier1"><div class="hub-name">HUB_RUNTIME_WORKSPACE</div><div class="hub-tier">TIER 1 · Active workspace · drafts</div></div>
+        <div class="hub-item tier1"><div class="hub-name">HUB_WORKING_FILES</div><div class="hub-tier">TIER 1 · RAW_THOUGHTS · INBOX</div></div>
+        <div class="hub-item tier1"><div class="hub-name">HUB_RUNTIME_RW</div><div class="hub-tier">TIER 1 · Read-write runtime</div></div>
+        <div class="hub-item tier2"><div class="hub-name">HUB_ARTWORK</div><div class="hub-tier">TIER 2 · Visual works · UV art</div></div>
+        <div class="hub-item tier2"><div class="hub-name">HUB_ARTWORK_SELLING</div><div class="hub-tier">TIER 2 · Sales materials</div></div>
+        <div class="hub-item tier2"><div class="hub-name">HUB_PRESS</div><div class="hub-tier">TIER 2 · Press releases · media</div></div>
+        <div class="hub-item tier2"><div class="hub-name">HUB_PRESS_COMMUNICATION</div><div class="hub-tier">TIER 2 · Outreach materials</div></div>
+        <div class="hub-item tier3"><div class="hub-name">HUB_PUBLICATION</div><div class="hub-tier">TIER 3 · Books · Inside the House</div></div>
+        <div class="hub-item tier3"><div class="hub-name">HUB_PUBLIC_PRESENCE</div><div class="hub-tier">TIER 3 · Web · social presence</div></div>
+        <div class="hub-item tier3"><div class="hub-name">HUB_PUBLIC_PRESENT</div><div class="hub-tier">TIER 3 · Presentations</div></div>
+        <div class="hub-item tier3"><div class="hub-name">HUB_RESEARCH</div><div class="hub-tier">TIER 3 · Research materials</div></div>
+        <div class="hub-item tier3"><div class="hub-name">HUB_RESEARCH_PSYCHOLOGY</div><div class="hub-tier">TIER 3 · ADHD+BPD dissertation</div></div>
+        <div class="hub-item tier4"><div class="hub-name">HUB_PSYCHOLOGY_DEFINITION</div><div class="hub-tier">TIER 4 · Psychology frameworks</div></div>
+        <div class="hub-item tier4"><div class="hub-name">HUB_NEURO_INBOX</div><div class="hub-tier">TIER 4 · Neurodivergence intake</div></div>
+        <div class="hub-item tier4"><div class="hub-name">HUB_RESIDENCIES_GRANTS</div><div class="hub-tier">TIER 4 · Grant materials · submissions</div></div>
+        <div class="hub-item tier4"><div class="hub-name">HUB_GRANTS_SUBMISSIONS</div><div class="hub-tier">TIER 4 · Active grant submissions</div></div>
+        <div class="hub-item tier5"><div class="hub-name">HUB_INSTITUTIONAL</div><div class="hub-tier">TIER 5 · Institutional documents</div></div>
+        <div class="hub-item tier5"><div class="hub-name">HUB_DISPATCH</div><div class="hub-tier">TIER 5 · Task dispatch · routing</div></div>
+        <div class="hub-item tier5"><div class="hub-name">HUB_SITE_WORKSHOP</div><div class="hub-tier">TIER 5 · Website workshop</div></div>
+        <div class="hub-item tier5"><div class="hub-name">HUB_IP_SCHOOL_PROTECTION</div><div class="hub-tier">TIER 5 · IP protection materials</div></div>
+        <div class="hub-item tier6"><div class="hub-name">HUB_CSV</div><div class="hub-tier">TIER 6 · CSV data files</div></div>
+        <div class="hub-item tier6"><div class="hub-name">HUB_PDF</div><div class="hub-tier">TIER 6 · PDF documents</div></div>
+        <div class="hub-item tier6"><div class="hub-name">HUB_TXT</div><div class="hub-tier">TIER 6 · Text files</div></div>
+        <div class="hub-item tier6"><div class="hub-name">HUB_ZIP</div><div class="hub-tier">TIER 6 · Archives</div></div>
+        <div class="hub-item tier6"><div class="hub-name">HUB_SCREENSHOT</div><div class="hub-tier">TIER 6 · Screenshots</div></div>
+        <div class="hub-item tier6"><div class="hub-name">HUB_PYTHON</div><div class="hub-tier">TIER 6 · Python scripts</div></div>
+        <div class="hub-item tier6"><div class="hub-name">HUB_NAV</div><div class="hub-tier">TIER 6 · Navigation files</div></div>
+        <div class="hub-item tier6"><div class="hub-name">HUB_CORE</div><div class="hub-tier">TIER 6 · Core misc</div></div>
+        <div class="hub-item special"><div class="hub-name">HUB_ARCHIVE_FREEZE</div><div class="hub-tier">SPECIAL · Protected · read-only zone</div></div>
+        <div class="hub-item special"><div class="hub-name">HUB_BLOOD_DESTINY</div><div class="hub-tier">SPECIAL · Personal canon</div></div>
+        <div class="hub-item special"><div class="hub-name">HUB_V3</div><div class="hub-tier">SPECIAL · V3 era archive</div></div>
+        <div class="hub-item special"><div class="hub-name">HUB_FORENSIC</div><div class="hub-tier">SPECIAL · Forensic evidence</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZTP -->
+  <div class="section">
+    <div class="section-header">
+      <span class="label">08</span>
+      <span class="title">ZERO-TRUST PROTOCOL (ZTP) — ORIGINAL AI GOVERNANCE ARCHITECTURE</span>
+    </div>
+    <div class="section-body">
+      <div class="ztp-block">
+        <div class="ztp-title">CORE LAW — NON-NEGOTIABLE</div>
+        <div class="ztp-rule"><div class="ztp-num">1</div><div>Human operator (Aelin) is the only subject of intent</div></div>
+        <div class="ztp-rule"><div class="ztp-num">2</div><div>Source of Truth is singular — one canonical root at all times</div></div>
+        <div class="ztp-rule"><div class="ztp-num">3</div><div>Declarative text has no execution power — text = read-only artifact</div></div>
+        <div class="ztp-rule"><div class="ztp-num">4</div><div>Every execution must produce forensic trace (hash, timestamp)</div></div>
+        <div class="ztp-rule"><div class="ztp-num">5</div><div>Retro-mutation is FORBIDDEN — fixed artifacts cannot be modified</div></div>
+        <div class="ztp-rule"><div class="ztp-num">6</div><div>Absence of operator = system halt — AI does not act without explicit command</div></div>
+        <div class="ztp-rule"><div class="ztp-num">7</div><div>AI suggestions are ADVISORY — operator confirms before any execution</div></div>
+        <div class="ztp-rule"><div class="ztp-num">8</div><div>No trust without verification — every file verified before use</div></div>
+        <div class="ztp-rule"><div class="ztp-num">9</div><div>Every new session: reconstruct full context BEFORE answering</div></div>
+        <div class="ztp-rule"><div class="ztp-num">10</div><div>sha256 + TAG created automatically for any created/rewritten file</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRANT SUBMISSIONS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="label">09</span>
+      <span class="title">GRANT & RESIDENCY SUBMISSIONS — 2026</span>
+    </div>
+    <div class="section-body">
+      <div class="grant-row">
+        <div class="grant-status"><span class="ok">✅</span></div>
+        <div class="grant-name">Prix Ars Electronica 2026 · Interactive Art+</div>
+        <div class="grant-amount">€10,000 + Golden Nica</div>
+        <div class="grant-date">2026-03-01</div>
+      </div>
+      <div class="grant-row">
+        <div class="grant-status"><span class="ok">✅</span></div>
+        <div class="grant-name">S+T+ARTS Prize 2026 · Grand Prize (×2 categories)</div>
+        <div class="grant-amount">€20,000 × 2</div>
+        <div class="grant-date">2026-03-02</div>
+      </div>
+      <div class="grant-row">
+        <div class="grant-status"><span class="ok">✅</span></div>
+        <div class="grant-name">Lumen Prize 2026 · Systems & Structures [AA596]</div>
+        <div class="grant-amount">prize TBD</div>
+        <div class="grant-date">2026-03-02</div>
+      </div>
+      <div class="grant-row">
+        <div class="grant-status"><span class="ok">✅</span></div>
+        <div class="grant-name">LACMA Art+Technology Lab 2026 · 2yr fellowship</div>
+        <div class="grant-amount">$50,000</div>
+        <div class="grant-date">2026-03-02</div>
+      </div>
+      <div class="grant-row">
+        <div class="grant-status"><span class="ok">✅</span></div>
+        <div class="grant-name">ZKM Rauschenberg Residencies 2026/27</div>
+        <div class="grant-amount">€7,500 + housing</div>
+        <div class="grant-date">2026-03-02</div>
+      </div>
+      <div class="grant-row">
+        <div class="grant-status"><span class="ok">✅</span></div>
+        <div class="grant-name">Mozilla Democracy × AI 2026 · finalists 2026-04-02</div>
+        <div class="grant-amount">$50K–$250K</div>
+        <div class="grant-date">2026-03-02</div>
+      </div>
+      <div class="grant-row">
+        <div class="grant-status"><span class="pending">⏳</span></div>
+        <div class="grant-name">Lumen Prize · Legacy Futures · "SIPA OS: Time as Infrastructure"</div>
+        <div class="grant-amount">prize TBD</div>
+        <div class="grant-date">deadline May 23</div>
+      </div>
+      <div class="grant-row">
+        <div class="grant-status"><span class="pending">⏳</span></div>
+        <div class="grant-name">Eyebeam Fellowship NYC 2026 · "Speculating on Plurality"</div>
+        <div class="grant-amount">$30,000</div>
+        <div class="grant-date">portal pending</div>
+      </div>
+      <div class="grant-row">
+        <div class="grant-status"><span class="pending">⏳</span></div>
+        <div class="grant-name">Shuttleworth Foundation · open-source + ZTP</div>
+        <div class="grant-amount">$125,000</div>
+        <div class="grant-date">September 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI LAYER -->
+  <div class="section">
+    <div class="section-header">
+      <span class="label">10</span>
+      <span class="title">AI LAYER — SIPA TEAM (MULTI-MODEL)</span>
+    </div>
+    <div class="section-body">
+      <div class="script-row">
+        <div class="script-name">SIPA_OS</div>
+        <div class="script-hash" style="min-width:140px;color:var(--accent2)">Claude Sonnet 4.6</div>
+        <div class="script-desc">Primary OS layer · architecture · canonical programming partner · 56 sessions</div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">SIPA_MLL</div>
+        <div class="script-hash" style="min-width:140px;color:var(--accent2)">GPT-4.5</div>
+        <div class="script-desc">ML analysis layer · trend recognition · anomaly detection</div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">SIPA_SHELL</div>
+        <div class="script-hash" style="min-width:140px;color:var(--accent2)">DeepSeek Coder</div>
+        <div class="script-desc">Shell operations · rapid script execution · API: deepseek-chat</div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">SIPA_AUDIT</div>
+        <div class="script-hash" style="min-width:140px;color:var(--accent2)">Claude Haiku 4.5</div>
+        <div class="script-desc">Fast audit operations · verification · forensic checks</div>
+      </div>
+      <div class="script-row">
+        <div class="script-name">SIPA_COORD</div>
+        <div class="script-hash" style="min-width:140px;color:var(--accent2)">DeepSeek R1</div>
+        <div class="script-desc">Coordination · reasoning layer · task decomposition</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>SIPA OS V11 · SYSTEM MAP · SESSION-56 · 2026-04-27</div>
+    <div>Architect: Aelin AquaSoul · soulinpsyabstract.store · GPG: EF538ACC45228273</div>
+    <div>github.com/soulinpsyabstract/payton-heart · UPTIME: since 2026-01-25</div>
+  </div>
+
+</div>
+</body>
+</html>
