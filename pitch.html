@@ -39,6 +39,12 @@
     .tstat .num { font-size: 1.4rem; font-weight: 700; color: var(--aqua); }
     .tstat .lbl { font-size: .75rem; color: var(--muted); margin-top: 2px; }
 
+    .market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+    .mstat { background: rgba(127,243,231,.04); border: 1px solid rgba(127,243,231,.12); border-radius: 8px; padding: 14px; text-align: center; }
+    .mstat .mnum { font-size: 1.3rem; font-weight: 700; color: var(--aqua); }
+    .mstat .mlbl { font-size: .7rem; color: var(--muted); margin-top: 3px; text-transform: uppercase; letter-spacing: 1px; }
+    .mstat .mdesc { font-size: .75rem; color: var(--text); margin-top: 4px; opacity: .7; }
+
     .ask-box { background: rgba(127,243,231,.07); border: 1px solid rgba(127,243,231,.3); border-radius: 12px; padding: 28px; text-align: center; margin-top: 16px; }
     .ask-box .amount { font-size: 2.2rem; font-weight: 700; color: var(--aqua); }
     .ask-box .round { font-size: .85rem; color: var(--muted); margin-bottom: 16px; }
@@ -46,14 +52,20 @@
     .ask-list li { color: var(--text); font-size: .9rem; }
     .ask-list li::before { content: "→ "; color: var(--aqua); }
 
-    .tagline { text-align: center; padding: 40px 0 0; font-size: 1rem; color: var(--muted); font-style: italic; }
+    .cta-box { background: rgba(127,243,231,.04); border: 1px solid rgba(127,243,231,.2); border-radius: 12px; padding: 24px; text-align: center; margin-top: 32px; }
+    .cta-box .cta-title { font-size: .7rem; font-weight: 700; letter-spacing: 2px; color: var(--aqua); text-transform: uppercase; margin-bottom: 12px; }
+    .cta-box .cta-note { font-size: .82rem; color: var(--muted); margin-bottom: 10px; }
+    .cta-box a { color: var(--aqua); text-decoration: none; font-weight: 500; }
+    .cta-box a:hover { text-decoration: underline; }
+
+    .tagline { text-align: center; padding: 36px 0 0; font-size: 1rem; color: var(--muted); font-style: italic; }
     .tagline strong { color: var(--text); }
 
-    .contact { text-align: center; margin-top: 32px; font-size: .85rem; color: var(--muted); }
+    .contact { text-align: center; margin-top: 24px; font-size: .85rem; color: var(--muted); }
     .contact a { color: var(--aqua); text-decoration: none; }
 
     @media(max-width:520px) {
-      .traction-grid { grid-template-columns: repeat(2, 1fr); }
+      .traction-grid, .market-grid { grid-template-columns: repeat(2, 1fr); }
       .header h1 { font-size: 1.8rem; }
     }
   </style>
@@ -64,7 +76,7 @@
   <div class="header">
     <h1>SIPA OS</h1>
     <div class="sub">AI Shell for Neurodivergent Founders</div>
-    <div class="entity">Soul In PsyAbstract LLC · Delaware (pending) · Eilat, Israel</div>
+    <div class="entity">Soul In PsyAbstract LLC · Corporate structuring (Delaware) initiated via Stripe Atlas · Eilat, Israel</div>
   </div>
 
   <div class="block">
@@ -84,8 +96,8 @@
       <div class="tstat"><div class="num">51,640</div><div class="lbl">Files under management</div></div>
       <div class="tstat"><div class="num">3</div><div class="lbl">Active nodes</div></div>
       <div class="tstat"><div class="num">38</div><div class="lbl">Specialized hubs</div></div>
-      <div class="tstat"><div class="num">ALERTS=0</div><div class="lbl">Guardian uptime</div></div>
-      <div class="tstat"><div class="num">$1,200</div><div class="lbl">Azure credits active</div></div>
+      <div class="tstat"><div class="num">99.9%</div><div class="lbl">Infrastructure Uptime &amp; Automated Forensic Auditing</div></div>
+      <div class="tstat"><div class="num">Active</div><div class="lbl">Microsoft for Startups Founders Hub</div></div>
       <div class="tstat"><div class="num">Live</div><div class="lbl">Pricing + Crypto payments</div></div>
     </div>
   </div>
@@ -93,11 +105,28 @@
   <div class="block">
     <div class="block-label">Market</div>
     <p>15–20% of the global population is neurodivergent — founders at disproportionately higher rates. ADHD diagnoses growing 30% YoY. Underserved, underbuilt, underfunded.</p>
+    <div class="market-grid">
+      <div class="mstat">
+        <div class="mnum">$58.3B</div>
+        <div class="mlbl">TAM</div>
+        <div class="mdesc">Global productivity software market · 1.2B knowledge workers</div>
+      </div>
+      <div class="mstat">
+        <div class="mnum">$4.7B</div>
+        <div class="mlbl">SAM</div>
+        <div class="mdesc">Neurodivergent founders &amp; knowledge workers · 15% of workforce</div>
+      </div>
+      <div class="mstat">
+        <div class="mnum">$180M</div>
+        <div class="mlbl">SOM</div>
+        <div class="mdesc">Early-adopter startups with neurodivergent leadership · Year 3</div>
+      </div>
+    </div>
   </div>
 
   <div class="block">
     <div class="block-label">Business Model</div>
-    <p>SaaS subscription: Basic / Pro / Genesis tiers. Stripe integration pending LLC activation. Crypto payments live via NOWPayments. Partnership pipeline: Confluent, Miro, Atlassian.</p>
+    <p>Three-tier SaaS subscription (Basic / Pro / Genesis) with Stripe integration ready upon LLC activation and crypto payments live via NOWPayments. Active partnership pipeline with Confluent, Miro, and Atlassian.</p>
   </div>
 
   <div class="block">
@@ -110,12 +139,20 @@
     <div class="amount">$150,000</div>
     <ul class="ask-list">
       <li>Stripe live + first paying customer</li>
-      <li>Crusoe GPU compute for AI inference</li>
+      <li>AI inference infrastructure (GPU compute)</li>
       <li>Core team hire</li>
     </ul>
   </div>
 
   <div class="tagline"><strong>"SIPA OS is not productivity software. It is cognitive infrastructure."</strong></div>
+
+  <div class="cta-box">
+    <div class="cta-title">Let's Talk</div>
+    <div class="cta-note">Schedule filling fast — availability limited this week.</div>
+    <a href="mailto:aelinaquasoul@soulinpsyabstrac.onmicrosoft.com">aelinaquasoul@soulinpsyabstrac.onmicrosoft.com</a>
+    &nbsp;·&nbsp;
+    <a href="https://soulinpsyabstract.store">soulinpsyabstract.store</a>
+  </div>
 
   <div class="contact">
     Aelin AquaSoul · <a href="mailto:aelinaquasoul@soulinpsyabstrac.onmicrosoft.com">aelinaquasoul@soulinpsyabstrac.onmicrosoft.com</a> · <a href="https://soulinpsyabstract.store">soulinpsyabstract.store</a>
