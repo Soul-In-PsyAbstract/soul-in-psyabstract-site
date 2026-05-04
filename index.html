@@ -1,6 +1,16 @@
 <!doctype html>
 <html lang="ru">
 <head>
+    <meta name="facebook-domain-verification" content="y7kiyzg2ii3z0sh4e7xkptdjtaedub" />
+    <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Ei Ni init zi Gi Nr Ui Xi Hi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync ln identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Qi createPersonProfile setInternalOrTestUser sn qi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ji debug Fr rn getPageViewId captureTraceFeedback captureTraceMetric Bi".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_qNbWJKfsSAvjGAscjVDUvaiuaA632WogXQHfbJzhjDhM', {
+        api_host: 'https://z.soulinpsyabstract.store',
+        ui_host: 'https://us.posthog.com',
+        defaults: '2026-01-30',
+        person_profiles: 'identified_only',
+    })
+    </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Soul In PsyAbstract — Marina | hearts · spirals · UV neon · acrylic</title>
@@ -258,6 +268,36 @@
     if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(function(){});
   </script>
   <script src="assets/js/page-assistant.js"></script>
+  <!-- Intercom AI widget + 5-message demo mode -->
+  <style>
+    #sipa-demo-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:99999;align-items:center;justify-content:center;}
+    #sipa-demo-modal.active{display:flex;}
+    #sipa-demo-box{background:#0e1117;border:1px solid #2a2d3a;border-radius:16px;padding:32px 28px;max-width:360px;width:90%;text-align:center;color:#e8e8f0;}
+    #sipa-demo-box h3{margin:0 0 10px;font-size:1.15rem;color:#c8b9ff;}
+    #sipa-demo-box p{font-size:.88rem;color:#9999bb;margin:0 0 20px;line-height:1.5;}
+    #sipa-demo-box input{width:100%;box-sizing:border-box;background:#161a26;border:1px solid #33364a;color:#e8e8f0;border-radius:8px;padding:10px 14px;font-size:.9rem;margin-bottom:12px;outline:none;}
+    #sipa-demo-box input:focus{border-color:#7c5cbf;}
+    #sipa-demo-sub-btn{width:100%;background:#5b3fa6;color:#fff;border:none;border-radius:8px;padding:11px;font-size:.92rem;cursor:pointer;font-weight:600;}
+    #sipa-demo-sub-btn:hover{background:#7048c8;}
+    #sipa-demo-skip{display:block;margin-top:14px;font-size:.78rem;color:#5a5a7a;cursor:pointer;text-decoration:underline;}
+    #sipa-demo-skip:hover{color:#9999bb;}
+    #sipa-demo-zendesk{display:block;margin-top:10px;font-size:.82rem;color:#7c5cbf;text-decoration:none;}
+    #sipa-demo-zendesk:hover{color:#c8b9ff;}
+    #sipa-demo-count{position:fixed;bottom:82px;right:22px;background:#1a1d2b;border:1px solid #2a2d3a;border-radius:20px;padding:4px 12px;font-size:.72rem;color:#7777aa;z-index:9998;pointer-events:none;transition:opacity .3s;}
+  </style>
+
+  <div id="sipa-demo-modal">
+    <div id="sipa-demo-box">
+      <h3>✦ 5 free messages used</h3>
+      <p>Subscribe for news, new drops and unlimited support access from Aelin AquaSoul.</p>
+      <input type="email" id="sipa-demo-email" placeholder="your@email.com" />
+      <button id="sipa-demo-sub-btn">Subscribe & continue chatting</button>
+      <a href="https://soulinpsyabstractsupport.zendesk.com" target="_blank" id="sipa-demo-zendesk">Open full support portal →</a>
+      <span id="sipa-demo-skip">skip for now</span>
+    </div>
+  </div>
+  <div id="sipa-demo-count" style="opacity:0"></div>
+
   <script>
     window.intercomSettings = {
       api_base: "https://api-iam.intercom.io",
@@ -266,6 +306,135 @@
   </script>
   <script>
     (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/h9dl06fm';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+  </script>
+  <script>
+  (function(){
+    var DEMO_LIMIT = 5;
+    var KEY = 'sipa_demo_msgs';
+    var UNLOCKED_KEY = 'sipa_demo_unlocked';
+    var countEl = document.getElementById('sipa-demo-count');
+    var modal = document.getElementById('sipa-demo-modal');
+    var skipBtn = document.getElementById('sipa-demo-skip');
+    var subBtn = document.getElementById('sipa-demo-sub-btn');
+
+    function getCount(){ return parseInt(localStorage.getItem(KEY)||'0',10); }
+    function setCount(n){ localStorage.setItem(KEY,n); }
+    function isUnlocked(){ return localStorage.getItem(UNLOCKED_KEY)==='1'; }
+
+    function updateCounter(){
+      if(isUnlocked()){ countEl.style.opacity='0'; return; }
+      var n = getCount();
+      var left = Math.max(0, DEMO_LIMIT - n);
+      countEl.textContent = left + ' free message' + (left!==1?'s':'') + ' left';
+      countEl.style.opacity = n > 0 ? '1' : '0';
+    }
+
+    function showModal(){
+      Intercom('hide');
+      modal.classList.add('active');
+    }
+
+    skipBtn.addEventListener('click', function(){
+      modal.classList.remove('active');
+      localStorage.setItem(UNLOCKED_KEY,'1');
+    });
+
+    subBtn.addEventListener('click', function(){
+      var email = document.getElementById('sipa-demo-email').value.trim().toLowerCase();
+      if(!email || !email.includes('@')){ document.getElementById('sipa-demo-email').focus(); return; }
+      localStorage.setItem(UNLOCKED_KEY,'1');
+      localStorage.setItem('sipa_sub_email', email);
+      modal.classList.remove('active');
+      if(window.posthog) posthog.capture('demo_subscribe', {email: email});
+      if(window.Intercom) Intercom('update', {email: email, name: 'Subscriber'});
+      // Save to Supabase users table
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST','https://xkwuqvpjnbtwdjhvjbki.supabase.co/rest/v1/users',true);
+      xhr.setRequestHeader('Content-Type','application/json');
+      xhr.setRequestHeader('apikey','sb_publishable_aj4l3LSW2u7mL3aw029x2w_S-QtEq_A2cALcEa');
+      xhr.setRequestHeader('Authorization','Bearer sb_publishable_aj4l3LSW2u7mL3aw029x2w_S-QtEq_A2cALcEa');
+      xhr.setRequestHeader('Prefer','resolution=ignore-duplicates');
+      xhr.send(JSON.stringify({email:email,subscription_tier:'free',proof_level:0}));
+    });
+
+    // Hook into Intercom after it loads
+    function hookIntercom(){
+      if(!window.Intercom) return;
+      // Count messages sent by user
+      var origIntercom = window.Intercom;
+      Intercom('onUserEmailSupplied', function(){ localStorage.setItem(UNLOCKED_KEY,'1'); });
+
+      // Patch to intercept sends via MutationObserver on the iframe
+      var patched = false;
+      Intercom('onShow', function(){
+        if(isUnlocked()) return;
+        updateCounter();
+        if(!patched){
+          patched = true;
+          // Watch for send button clicks inside Intercom iframe
+          setTimeout(function(){
+            var frames = document.querySelectorAll('iframe[name^="intercom"]');
+            frames.forEach(function(f){
+              try {
+                var doc = f.contentDocument || f.contentWindow.document;
+                doc.addEventListener('click', function(e){
+                  var el = e.target;
+                  // Intercom send button has data-test="send-button" or role="button" near input
+                  if(el && (el.getAttribute('data-test')==='send-button' || el.closest('[data-test="send-button"]'))){
+                    onMessageSent();
+                  }
+                }, true);
+              } catch(err){}
+            });
+          }, 2000);
+        }
+      });
+    }
+
+    function onMessageSent(){
+      if(isUnlocked()) return;
+      var n = getCount() + 1;
+      setCount(n);
+      updateCounter();
+      if(n >= DEMO_LIMIT){
+        setTimeout(showModal, 800);
+      }
+    }
+
+    // Also patch XMLHttpRequest to detect Intercom message sends
+    (function(){
+      var origOpen = XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open = function(method, url){
+        if(typeof url==='string' && url.indexOf('intercom.io')>-1 && url.indexOf('/conversations')>-1 && method.toUpperCase()==='POST'){
+          if(!isUnlocked()){
+            var self = this;
+            var origSend = self.send.bind(self);
+            self.send = function(body){
+              // Only count if body looks like a user message
+              try{
+                var data = JSON.parse(body);
+                if(data && (data.type==='comment' || data.message_type==='comment' || data.body)){
+                  onMessageSent();
+                }
+              }catch(e){}
+              origSend(body);
+            };
+          }
+        }
+        return origOpen.apply(this, arguments);
+      };
+    })();
+
+    window.addEventListener('load', function(){
+      updateCounter();
+      var t = setInterval(function(){
+        if(window.Intercom && typeof window.Intercom === 'function'){
+          hookIntercom();
+          clearInterval(t);
+        }
+      }, 500);
+    });
+  })();
   </script>
 </body>
 </html>
