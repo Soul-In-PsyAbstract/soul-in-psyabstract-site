@@ -69,6 +69,16 @@ a.back-link:hover{color:#00f5ff;}
 .btn-buy{display:inline-block;padding:10px 24px;background:linear-gradient(90deg,#0044ff,#00f5ff);color:#000;font-family:'Raleway',sans-serif;font-weight:800;font-size:12px;letter-spacing:2px;border-radius:8px;text-decoration:none;transition:all .2s;cursor:pointer;border:none;}
 .btn-buy:hover{box-shadow:0 0 20px #00f5ff66;transform:scale(1.03);}
 
+/* SEARCH BAR */
+.art-search-wrap{display:flex;gap:10px;padding:0 20px 16px;max-width:600px;margin:0 auto;align-items:center;}
+.art-search-input{flex:1;background:#000d2a;border:1px solid #00f5ff33;border-radius:24px;padding:10px 18px;color:#cce0ff;font-family:'Raleway',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
+.art-search-input:focus{border-color:#00f5ff88;}
+.art-search-input::placeholder{color:#334466;}
+.art-search-btn{background:#00f5ff22;border:1px solid #00f5ff44;border-radius:50%;width:38px;height:38px;color:#00f5ff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;}
+.art-search-btn:hover{background:#00f5ff33;}
+.art-search-clear{font-size:11px;color:#4488aa;background:transparent;border:none;cursor:pointer;letter-spacing:1px;padding:4px 8px;display:none;}
+.art-search-status{text-align:center;font-size:11px;color:#7c3aed;letter-spacing:2px;padding-bottom:8px;min-height:18px;}
+
 /* ART GRID */
 .filter-bar{display:flex;gap:8px;padding:0 20px 16px;justify-content:center;flex-wrap:wrap;}
 .filter-btn{padding:6px 16px;border-radius:20px;border:1px solid #00f5ff33;background:transparent;color:#4488aa;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .2s;}
@@ -216,6 +226,13 @@ footer a:hover{color:var(--cyan);}
     <div class="section-title">Original UV Paintings</div>
     <div class="section-sub">40×50 cm · Acrylic on Canvas · UV-reactive pigments · Certificate of Authenticity</div>
   </div>
+
+  <div class="art-search-wrap">
+    <input class="art-search-input" id="art-search-input" type="text" placeholder="Search paintings by mood, color, style…" onkeydown="artSearchKeydown(event)" />
+    <button class="art-search-btn" onclick="artSearchRun()" title="Search">🔍</button>
+    <button class="art-search-clear" id="art-search-clear" onclick="artSearchClear()">✕ clear</button>
+  </div>
+  <div class="art-search-status" id="art-search-status"></div>
 
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterArt('all',this)">All <span id="count-all"></span></button>
@@ -408,13 +425,20 @@ footer a:hover{color:var(--cyan);}
     <div class="modal-detail" id="modal-detail">40×50 cm · Acrylic on canvas · UV-reactive pigments<br>Includes Certificate of Authenticity signed by Aelin AquaSoul<br>Ships from Eilat, Israel · Worldwide shipping · Tracking included</div>
     <div class="modal-buy-grid">
       <a class="modal-btn modal-btn-paypal" id="modal-paypal" href="#" target="_blank" rel="noopener">💳 PayPal</a>
+      <a class="modal-btn" id="modal-wise" href="#" target="_blank" rel="noopener" style="background:linear-gradient(90deg,#163300,#2d6a00);border:1px solid #4ade8066;color:#4ade80;">🏦 Wise</a>
       <a class="modal-btn modal-btn-wa" href="https://wa.me/972525074743" target="_blank" rel="noopener">💬 WhatsApp</a>
+      <a class="modal-btn" href="https://wise.com/pay/r/CKu2Ndr1ukowqRs" target="_blank" rel="noopener" style="background:#0d1117;border:1px solid #ffffff22;color:#aaa;font-size:12px;">📦 Pay Shipping $150 (Wise)</a>
       <a class="modal-btn modal-btn-ig" href="https://instagram.com/soul.in.psyabstract" target="_blank" rel="noopener">📷 Instagram DM</a>
       <a class="modal-btn modal-btn-eth" href="https://paypal.me/SoulInPsyAbstract" target="_blank" rel="noopener">💳 PayPal.me</a>
     </div>
+    <a class="modal-btn" id="modal-crypto" href="#" target="_blank" rel="noopener"
+       style="display:block;margin-bottom:10px;background:linear-gradient(90deg,#1a0a2e,#2d1b69);border:1px solid #7c3aed44;color:#a78bfa;font-size:12px;text-align:center;padding:10px;">
+      ₿ Pay with Crypto (BTC · ETH · SOL · USDT)
+    </a>
     <div id="modal-nft-row" style="display:none;margin-bottom:10px;">
       <a class="modal-btn" id="modal-nft" href="#" target="_blank" rel="noopener" style="background:#0d1a2a;border:1px solid #44ffaa44;color:#44ffaa;display:block;text-align:center;padding:10px;">🔗 View NFT Certificate on Rarible</a>
     </div>
+    <button id="modal-ask-ai" onclick="modalAskAI()" style="display:block;width:100%;margin-bottom:8px;padding:11px 16px;background:transparent;border:1px solid #00f5ff55;border-radius:8px;color:#00f5ff;cursor:pointer;font-family:'Raleway',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;transition:all .2s;" onmouseover="this.style.borderColor='#00f5ff';this.style.background='#00f5ff11'" onmouseout="this.style.borderColor='#00f5ff55';this.style.background='transparent'">✦ Ask AI about this piece</button>
     <button class="modal-close" onclick="closeModal()">✕ CLOSE</button>
   </div>
 </div>
@@ -440,6 +464,16 @@ const PAYPAL_NCP = {
   800: 'https://www.paypal.com/ncp/payment/C35VA4EUKNR7Q',
   1000:'https://www.paypal.com/ncp/payment/DWXVT5MTH3NG8',
 };
+
+// Wise parametric URL builder
+function wiseUrl(amount) { return 'https://wise.com/pay/business/soulinpsyabstract?amount=' + amount + '&currency=USD&utm_source=quick_pay'; }
+const WISE_ART = {
+  400: wiseUrl(400),
+  600: wiseUrl(600),
+  800: wiseUrl(800),
+  1000:wiseUrl(1000),
+};
+const WISE_SHIPPING = wiseUrl(150);
 
 const TAGLINES = {
   EN: '✦ Two realities on one canvas ✦',
@@ -507,11 +541,14 @@ function renderGrid(filter) {
   }).join('');
 }
 
+let currentModalArt = null;
+
 function openModal(e, code) {
   e.stopPropagation();
   const arts = (window.__DATA__ && window.__DATA__.ART) || [];
   const art = arts.find(a => a.code === code);
   if(!art) return;
+  currentModalArt = art;
   const title = currentLang === 'RU' ? (art.title_ru || art.title_en) : (art.title_en || art.title_ru);
   document.getElementById('modal-img').src = 'assets/img/' + art.file;
   document.getElementById('modal-img').alt = title;
@@ -519,6 +556,10 @@ function openModal(e, code) {
   document.getElementById('modal-price').textContent = '$' + art.price_usd + ' USD';
   const ppLink = PAYPAL_NCP[art.price_usd] || PAYPAL_NCP[400];
   document.getElementById('modal-paypal').href = ppLink;
+  const wiseLink = WISE_ART[art.price_usd] || WISE_ART[400];
+  document.getElementById('modal-wise').href = wiseLink;
+  const cryptoLink = `https://nowpayments.io/payment/?iid=SIPA_${art.code}&price=${art.price_usd}&currency=USD&description=${encodeURIComponent(art.title_en)}`;
+  document.getElementById('modal-crypto').href = cryptoLink;
   const nftRow = document.getElementById('modal-nft-row');
   if(art.nft) {
     document.getElementById('modal-nft').href = art.nft;
@@ -530,11 +571,106 @@ function openModal(e, code) {
   if(typeof posthog !== 'undefined') posthog.capture('art_modal_open', {code: art.code, price: art.price_usd});
 }
 
+function modalAskAI() {
+  if(!currentModalArt) return;
+  const title = currentLang === 'RU' ? (currentModalArt.title_ru || currentModalArt.title_en) : (currentModalArt.title_en || currentModalArt.title_ru);
+  const prefill = `Tell me about "${title}" — $${currentModalArt.price_usd} USD painting`;
+  closeModal();
+  if(typeof sipaAiOpen === 'function') sipaAiOpen(prefill);
+}
+
 function closeModal() {
   document.getElementById('buyModal').classList.remove('open');
 }
 
 document.addEventListener('keydown', e => { if(e.key === 'Escape'){ closeModal(); closeHmModal(); } });
+
+// ── QDRANT SEMANTIC SEARCH ─────────────────────────────────────
+let artSearchActive = false;
+let artSearchResults = null;
+
+function artSearchKeydown(e) {
+  if(e.key === 'Enter') { e.preventDefault(); artSearchRun(); }
+}
+
+async function artSearchRun() {
+  const query = document.getElementById('art-search-input').value.trim();
+  if(!query) { artSearchClear(); return; }
+
+  const statusEl = document.getElementById('art-search-status');
+  const clearBtn = document.getElementById('art-search-clear');
+  statusEl.textContent = '✦ searching…';
+  statusEl.style.color = '#a78bfa';
+
+  try {
+    const res = await fetch('/api/search', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({query: query, limit: 20})
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+
+    // Expect data.results = [{code, score, ...}] or data = [{payload:{code}, score}]
+    const hits = (data.results || data || []).map(h => h.payload?.code || h.code).filter(Boolean);
+
+    if(hits.length === 0) {
+      statusEl.textContent = '✦ no matches — try another query';
+      statusEl.style.color = '#ff4466';
+      return;
+    }
+
+    const arts = (window.__DATA__ && window.__DATA__.ART) || [];
+    // Build ordered list: hits first (in score order), preserve codes
+    const hitSet = new Set(hits);
+    artSearchResults = hits
+      .map(code => arts.find(a => a.code === code))
+      .filter(Boolean);
+
+    artSearchActive = true;
+    clearBtn.style.display = 'inline-block';
+    statusEl.textContent = `✦ ${artSearchResults.length} semantic match${artSearchResults.length !== 1 ? 'es' : ''} for "${query}"`;
+    statusEl.style.color = '#a78bfa';
+
+    // Render search results (bypass normal filter)
+    renderGridFromList(artSearchResults);
+    if(typeof posthog !== 'undefined') posthog.capture('art_search', {query, hits: artSearchResults.length});
+  } catch(err) {
+    statusEl.textContent = '✦ search unavailable — use filters above';
+    statusEl.style.color = '#ff4466';
+    console.warn('Qdrant search error:', err);
+  }
+}
+
+function artSearchClear() {
+  artSearchActive = false;
+  artSearchResults = null;
+  document.getElementById('art-search-input').value = '';
+  document.getElementById('art-search-status').textContent = '';
+  document.getElementById('art-search-clear').style.display = 'none';
+  renderGrid(currentFilter);
+}
+
+function renderGridFromList(arts) {
+  document.getElementById('art-count').textContent = arts.length + ' works';
+  const grid = document.getElementById('art-grid');
+  grid.innerHTML = arts.map(art => {
+    const title = currentLang === 'RU' ? (art.title_ru || art.title_en) : (art.title_en || art.title_ru);
+    const nftTag = art.nft ? '<span class="art-nft-tag">NFT ✦</span>' : '';
+    const soldTag = art.sold ? '<span class="art-sold-tag">SOLD</span>' : '';
+    const buyBtn = art.sold ? '' : `<button class="art-btn art-btn-buy" onclick="openModal(event,'${art.code}')">Buy $${art.price_usd}</button>`;
+    const waBtn = `<a class="art-btn art-btn-wa" href="https://wa.me/972525074743?text=Hi!%20I%27m%20interested%20in%20${encodeURIComponent(art.title_en)}%20($${art.price_usd})" target="_blank" rel="noopener">WhatsApp</a>`;
+    const nftBtn = art.nft ? `<a class="art-btn art-btn-nft" href="${art.nft}" target="_blank" rel="noopener">NFT</a>` : '';
+    return `<div class="art-card${art.sold?' sold':''}" data-price="${art.price_usd}" data-nft="${art.nft?'1':''}">
+      <img class="art-thumb" src="assets/img/${art.file}" alt="${title}" loading="lazy" onclick="openModal(event,'${art.code}')">
+      <div class="art-info">
+        <div class="art-title">${title}</div>
+        <div class="art-meta"><span class="art-price">$${art.price_usd}</span>${soldTag}${nftTag}</div>
+        <div class="art-actions">${buyBtn}${waBtn}${nftBtn}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
 
 // Init
 renderGrid('all');
@@ -664,5 +800,140 @@ renderHmGrid('soaps');
   window.intercomSettings = {api_base:"https://api-iam.intercom.io",app_id:"h9dl06fm"};
 </script>
 <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/h9dl06fm';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();</script>
+
+<!-- ══════════ SIPA AI CHAT WIDGET ══════════ -->
+<style>
+#sipa-ai-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;background:#00f5ff;cursor:pointer;z-index:9999;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px #00f5ff88,0 4px 16px #0008;transition:transform .2s,box-shadow .2s;}
+#sipa-ai-btn:hover{transform:scale(1.1);box-shadow:0 0 32px #00f5ffcc,0 4px 20px #0008;}
+#sipa-ai-btn svg{width:26px;height:26px;fill:#000d2a;}
+#sipa-ai-panel{position:fixed;bottom:90px;right:24px;width:320px;height:380px;background:#000d2a;border:1px solid #00f5ff44;border-radius:12px;z-index:9998;display:none;flex-direction:column;box-shadow:0 8px 40px #00000099,0 0 40px #00f5ff11;overflow:hidden;}
+#sipa-ai-panel.open{display:flex;}
+#sipa-ai-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #00f5ff22;background:#000820;flex-shrink:0;}
+#sipa-ai-header-title{font-family:'Courier New',monospace;font-size:13px;color:#00f5ff;letter-spacing:2px;font-weight:700;}
+#sipa-ai-close{background:transparent;border:none;color:#4488aa;cursor:pointer;font-size:18px;line-height:1;padding:2px 6px;border-radius:4px;transition:color .15s;}
+#sipa-ai-close:hover{color:#00f5ff;}
+#sipa-ai-messages{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px;}
+#sipa-ai-messages::-webkit-scrollbar{width:4px;}
+#sipa-ai-messages::-webkit-scrollbar-track{background:transparent;}
+#sipa-ai-messages::-webkit-scrollbar-thumb{background:#00f5ff33;border-radius:4px;}
+.sipa-msg{max-width:88%;padding:8px 12px;border-radius:10px;font-size:12px;line-height:1.6;word-break:break-word;}
+.sipa-msg-user{align-self:flex-end;background:#001a40;border:1px solid #00f5ff33;color:#cce0ff;}
+.sipa-msg-ai{align-self:flex-start;background:#00f5ff11;border:1px solid #00f5ff22;color:#b0d8f0;}
+.sipa-msg-thinking{align-self:flex-start;color:#4488aa;font-size:11px;font-style:italic;padding:4px 0;}
+#sipa-ai-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #00f5ff22;background:#000820;flex-shrink:0;}
+#sipa-ai-input{flex:1;background:#001030;border:1px solid #00f5ff33;border-radius:8px;padding:8px 10px;color:#cce0ff;font-family:'Raleway',sans-serif;font-size:12px;outline:none;resize:none;}
+#sipa-ai-input:focus{border-color:#00f5ff66;}
+#sipa-ai-send{background:#00f5ff;border:none;border-radius:8px;padding:8px 14px;color:#000d2a;font-weight:800;font-size:12px;cursor:pointer;font-family:'Raleway',sans-serif;letter-spacing:1px;transition:background .15s,box-shadow .15s;flex-shrink:0;}
+#sipa-ai-send:hover{background:#33faff;box-shadow:0 0 12px #00f5ff88;}
+#sipa-ai-send:disabled{background:#004455;color:#336677;cursor:default;box-shadow:none;}
+</style>
+
+<!-- Float Button -->
+<button id="sipa-ai-btn" onclick="sipaAiToggle()" title="Ask SIPA AI">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.02 2 11c0 2.81 1.32 5.33 3.4 7.01L4 22l4.29-1.43C9.42 21.17 10.69 21.5 12 21.5c5.52 0 10-4.02 10-9s-4.48-9-10-9zm1 13H7v-2h6v2zm4-4H7V9h10v2z"/></svg>
+</button>
+
+<!-- Chat Panel -->
+<div id="sipa-ai-panel">
+  <div id="sipa-ai-header">
+    <span id="sipa-ai-header-title">✦ SIPA AI</span>
+    <button id="sipa-ai-close" onclick="sipaAiToggle()">✕</button>
+  </div>
+  <div id="sipa-ai-messages">
+    <div class="sipa-msg sipa-msg-ai">✦ Hello! I'm SIPA AI — ask me anything about the artworks, UV-reactive technique, or how to order. I'm here to help.</div>
+  </div>
+  <div id="sipa-ai-input-row">
+    <textarea id="sipa-ai-input" rows="1" placeholder="Ask about an artwork…" onkeydown="sipaAiKeydown(event)"></textarea>
+    <button id="sipa-ai-send" onclick="sipaAiSend()">Send</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const SYSTEM_CONTEXT = "You are SIPA AI on soulinpsyabstract.store — an art + handmade shop by Aelin AquaSoul. Help visitors discover artworks, answer questions about pieces, explain UV-reactive art, and assist with purchases. Be warm, short, poetic.";
+  let firstMessage = true;
+  let busy = false;
+
+  window.sipaAiToggle = function() {
+    const panel = document.getElementById('sipa-ai-panel');
+    panel.classList.toggle('open');
+    if(panel.classList.contains('open')) {
+      document.getElementById('sipa-ai-input').focus();
+    }
+  };
+
+  window.sipaAiOpen = function(prefill) {
+    const panel = document.getElementById('sipa-ai-panel');
+    panel.classList.add('open');
+    if(prefill) {
+      document.getElementById('sipa-ai-input').value = prefill;
+    }
+    document.getElementById('sipa-ai-input').focus();
+  };
+
+  window.sipaAiKeydown = function(e) {
+    if(e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sipaAiSend();
+    }
+  };
+
+  window.sipaAiSend = async function() {
+    if(busy) return;
+    const input = document.getElementById('sipa-ai-input');
+    const text = input.value.trim();
+    if(!text) return;
+
+    busy = true;
+    document.getElementById('sipa-ai-send').disabled = true;
+    input.value = '';
+
+    sipaAiAppend('user', text);
+
+    const thinkEl = document.createElement('div');
+    thinkEl.className = 'sipa-msg sipa-msg-thinking';
+    thinkEl.textContent = '✦ thinking…';
+    document.getElementById('sipa-ai-messages').appendChild(thinkEl);
+    sipaAiScroll();
+
+    let payload = text;
+    if(firstMessage) {
+      payload = SYSTEM_CONTEXT + '\n\n' + text;
+      firstMessage = false;
+    }
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({message: payload})
+      });
+      const data = await res.json();
+      thinkEl.remove();
+      sipaAiAppend('ai', data.reply || '✦ No reply received.');
+    } catch(err) {
+      thinkEl.remove();
+      sipaAiAppend('ai', '✦ Could not reach SIPA AI. Please try again.');
+    }
+
+    busy = false;
+    document.getElementById('sipa-ai-send').disabled = false;
+    input.focus();
+  };
+
+  function sipaAiAppend(role, text) {
+    const msg = document.createElement('div');
+    msg.className = 'sipa-msg ' + (role === 'user' ? 'sipa-msg-user' : 'sipa-msg-ai');
+    msg.textContent = text;
+    document.getElementById('sipa-ai-messages').appendChild(msg);
+    sipaAiScroll();
+  }
+
+  function sipaAiScroll() {
+    const msgs = document.getElementById('sipa-ai-messages');
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+})();
+</script>
 </body>
 </html>

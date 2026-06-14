@@ -44,6 +44,7 @@
             <a class="btn" target="_blank" rel="noopener" href="${(window.__PAYCFG__&&__PAYCFG__.PAYPAL_ME)||'https://paypal.me/SoulInPsyAbstract'}">PayPal.me</a>
             ${a.nft?`<a class="btn" target="_blank" href="${a.nft}" rel="noopener">NFT</a>`:''}
             ${eth?`<button class="btn" id="copyeth">${t('ETH адрес','Copy ETH')}</button>`:''}
+            <button class="btn" id="bm-crypto" style="background:linear-gradient(135deg,#00c6ff 0%,#7b2fff 100%);color:#fff;border:none">${t('Крипто · NOWPayments','Crypto · NOWPayments')}</button>
           </div>
           <div id="bm-ship-wrap" style="display:none;margin-top:6px">
             <div style="font-size:12px;color:var(--muted);letter-spacing:.05em">${t('ОПЛАТА ДОСТАВКИ','SHIPPING PAYMENT')}</div>
@@ -91,6 +92,29 @@
     const b = document.getElementById('copyeth');
     if(b){ b.addEventListener('click', async ()=>{
       try{ await navigator.clipboard.writeText(eth); b.textContent=t('Скопировано!','Copied!'); }catch(e){}
+    }); }
+
+    const cryptoBtn = document.getElementById('bm-crypto');
+    if(cryptoBtn){ cryptoBtn.addEventListener('click', async ()=>{
+      const artAmount = base + (exEl&&exEl.checked?ex:0);
+      const apiUrl = (window.__PAYCFG__&&__PAYCFG__.NOWPAYMENTS_API)||'/api/nowpayments/create';
+      const fallback = (window.__PAYCFG__&&__PAYCFG__.NOWPAYMENTS_FALLBACK)||'https://nowpayments.io/payment?iid=4954740232';
+      cryptoBtn.textContent = t('Загрузка...','Loading...');
+      cryptoBtn.disabled = true;
+      try{
+        const r = await fetch(apiUrl, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({amount: artAmount, title: label, user_id:'store_'+Date.now()})
+        });
+        const d = await r.json();
+        if(d.invoice_url){ window.open(d.invoice_url,'_blank'); cryptoBtn.textContent=t('Открыто ↗','Opened ↗'); }
+        else throw new Error(d.error||'no url');
+      }catch(e){
+        window.open(fallback,'_blank');
+        cryptoBtn.textContent=t('Открыто ↗','Opened ↗');
+      }
+      setTimeout(()=>{ cryptoBtn.disabled=false; cryptoBtn.style.background='linear-gradient(135deg,#00c6ff 0%,#7b2fff 100%)'; cryptoBtn.textContent=t('Крипто · NOWPayments','Crypto · NOWPayments'); },3000);
     }); }
   };
 })();
