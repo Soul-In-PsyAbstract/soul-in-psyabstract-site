@@ -97,8 +97,8 @@
     const cryptoBtn = document.getElementById('bm-crypto');
     if(cryptoBtn){ cryptoBtn.addEventListener('click', async ()=>{
       const artAmount = base + (exEl&&exEl.checked?ex:0);
-      const apiUrl = (window.__PAYCFG__&&__PAYCFG__.NOWPAYMENTS_API)||'/api/nowpayments/create';
-      const fallback = (window.__PAYCFG__&&__PAYCFG__.NOWPAYMENTS_FALLBACK)||'https://nowpayments.io/payment?iid=4954740232';
+      const apiUrl = (window.__PAYCFG__&&window.__PAYCFG__.NOWPAYMENTS_API)||'/api/nowpayments/create';
+      const fallback = (window.__PAYCFG__&&window.__PAYCFG__.NOWPAYMENTS_FALLBACK)||'https://nowpayments.io/payment?iid=4954740232';
       cryptoBtn.textContent = t('Загрузка...','Loading...');
       cryptoBtn.disabled = true;
       try{

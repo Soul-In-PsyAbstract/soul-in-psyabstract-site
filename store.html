@@ -387,6 +387,15 @@ footer a:hover{color:var(--cyan);}
   <div class="hm-grid" id="hm-soaps-grid"></div>
 </div>
 
+<!-- ══════════ CREAMS ══════════ -->
+<div class="product-section" id="sec-creams">
+  <div class="section-header">
+    <div class="section-title">🧴 Handmade Creams · Кремы</div>
+    <div class="section-sub">Natural base · Essential oils · INCI certified · Intention-charged</div>
+  </div>
+  <div class="hm-grid" id="hm-creams-grid"></div>
+</div>
+
 </main>
 
 <!-- ══════════ HANDMADE PRODUCT MODAL ══════════ -->
@@ -407,6 +416,7 @@ footer a:hover{color:var(--cyan);}
     <div class="hm-btn-grid">
       <a class="hm-btn hm-btn-wa" id="hm-modal-wa" href="#" target="_blank" rel="noopener">💬 Order via WhatsApp</a>
       <a class="hm-btn hm-btn-ig" href="https://instagram.com/soul.in.psyabstract" target="_blank" rel="noopener">📷 Instagram DM</a>
+      <a class="hm-btn hm-btn-inci" id="hm-modal-inci" href="#" target="_blank" rel="noopener" style="display:none;background:#1a0040;border:1px solid #a855f7;color:#d8b4fe;">🔬 INCI / Ingredients</a>
     </div>
     <div class="reviews-block">
       <div class="reviews-title">Customer reviews · Отзывы</div>
@@ -721,6 +731,11 @@ const HM_PRODUCTS = {
     {id:'forest',icon:'✨',price:'90 / 220 ₪',cat:'HEALTH',name:'Breath of the Forest',intention:'With every breath lightness fills my body and the forest\'s power cleanses it.',composition:'Argan base 10ml · Eucalyptus · Lemon eucalyptus · Pine · Crystal: clear quartz',tags:['Health','Breathing','Clear Quartz','Immunity'],stars:5,reviews_count:17},
     {id:'velvet-dream',icon:'✨',price:'90 / 220 ₪',cat:'SLEEP · HARMONY',name:'Velvet Dream Portal',intention:'I dive into the velvet depths of dreams where healing and answers await.',composition:'Argan base 10ml · Lavender · Ylang-ylang · Vanilla · Crystal: amethyst · Apply to temples before sleep',tags:['Sleep','Healing','Amethyst','Lucid Dreams'],stars:5,reviews_count:19},
   ],
+  creams: [
+    {id:'cream-coconut',slug:'cream-coconut',icon:'🧴',price:'85 ₪',cat:'NOURISHING',name:'Coconut Nourishing Cream',intention:'This cream wraps your skin in the warmth of a tropical paradise, nourishing deeply with every touch.',composition:'Aqua · Cocos Nucifera Oil 15% · Glycerin · Sodium Hyaluronate · Natural Fragrance',tags:['Nourishing','Coconut','Moisturizing','Daily Care'],stars:5,reviews_count:6},
+    {id:'serum-hyaluronic',slug:'serum-hyaluronic',icon:'✨',price:'120 ₪',cat:'HYDRATION · GLOW',name:'Hyaluronic Glow Serum',intention:'Pure hydration meets radiant glow — your skin drinks deeply and shines from within.',composition:'Aqua · Sodium Hyaluronate 2% · Niacinamide 5% · Glycerin · Panthenol',tags:['Hyaluronic','Brightening','Anti-aging','Serum'],stars:5,reviews_count:4},
+    {id:'mask-clay-peptides',slug:'mask-clay-peptides',icon:'🌸',price:'95 ₪',cat:'DETOX · REJUVENATION',name:'Pink Clay + Peptides Mask',intention:'Pink earth meets science — this mask cleanses the soul of the skin and turns back time.',composition:'Aqua · Kaolin 20% · Glycerin · Palmitoyl Tripeptide-1 · Rosehip Extract · Sodium Hyaluronate',tags:['Pink Clay','Peptides','Detox','Anti-aging'],stars:5,reviews_count:3},
+  ],
   soaps: [
     {id:'dual-detox',icon:'🫧',price:'45 / 80 ₪',cat:'CLEANSING · DETOX',name:'Dual Reality Detox',intention:'This soap erases the boundary between physical and energetic heaviness.',composition:'Senteur de Marseille 100g · Black salt 15g · Eucalyptus · Lemongrass · Nettle, sage · Crystal: fluorite',tags:['Detox','Cleansing','Fluorite','Black Salt'],stars:5,reviews_count:8},
     {id:'pink-nebula',icon:'🫧',price:'45 / 80 ₪',cat:'TENDERNESS · LOVE',name:'Pink Nebula Tenderness',intention:'Every lather is a cloud from a pink nebula enveloping your skin with love.',composition:'Rubes Care Olive Oil 100g · Pink salt 10g · Rose · Lavender · Rose petals, peonies · Crystal: rose quartz',tags:['Tenderness','Love','Rose Quartz','Sensitive Skin'],stars:5,reviews_count:14},
@@ -781,6 +796,9 @@ function openHmModal(id, type) {
   document.getElementById('hm-modal-reviews').innerHTML = HM_REVIEWS.map(r =>
     `<div class="review-item"><div class="review-stars">${r.stars}</div><div class="review-text">"${r.text}"</div><div class="review-author">${r.author}</div></div>`
   ).join('');
+  const inciBtn = document.getElementById('hm-modal-inci');
+  const inciSlug = p.slug || p.id;
+  if(inciBtn){ inciBtn.href = `https://soulinpsyabstract.store/i/${inciSlug}`; inciBtn.style.display = 'block'; }
   document.getElementById('hmModal').classList.add('open');
   if(typeof posthog !== 'undefined') posthog.capture('hm_modal_open', {id, type});
 }
@@ -794,6 +812,7 @@ function closeHmModal() {
 renderHmGrid('candles');
 renderHmGrid('oils');
 renderHmGrid('soaps');
+renderHmGrid('creams');
 </script>
 
 <script>
