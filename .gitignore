@@ -4,3 +4,8 @@ assets/video/
 *.mp4
 *.mov
 *.avi
+
+# Secrets — never in git
+.env
+.env.*
+!.env.example
