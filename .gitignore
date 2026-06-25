@@ -9,3 +9,4 @@ assets/video/
 .env
 .env.*
 !.env.example
+products/
