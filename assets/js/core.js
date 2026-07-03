@@ -329,6 +329,44 @@
     });
   }
 
+  function injectNavBurger(){
+    const nav = $('.nav');
+    if(!nav) return;
+
+    // Add Мерч link if not present
+    if(!nav.querySelector('[href="/merch"]')){
+      const m = document.createElement('a');
+      m.className='pill'; m.href='/merch';
+      m.textContent='🛍 Мерч';
+      nav.appendChild(m);
+    }
+
+    const header = nav.closest('.header,.wrap') || nav.parentNode;
+    const btn = document.createElement('button');
+    btn.className='nav-burger btn';
+    btn.setAttribute('aria-expanded','false');
+    btn.setAttribute('aria-label','Открыть меню');
+    btn.textContent='☰ Меню';
+    nav.parentNode.insertBefore(btn, nav);
+    nav.classList.add('nav-collapsible');
+    header.classList.add('nav-burger-active');
+
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const open = nav.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? '✕ Закрыть' : '☰ Меню';
+    });
+
+    document.addEventListener('click', ()=>{
+      nav.classList.remove('nav-open');
+      btn.setAttribute('aria-expanded','false');
+      btn.textContent='☰ Меню';
+    });
+
+    nav.addEventListener('click', (e)=>{ e.stopPropagation(); });
+  }
+
   function injectTawk(){
     const t = ST.cfg?.chat?.tawk;
     if(!t || !t.embed_script) return;
@@ -345,6 +383,7 @@
     bindLangToggle();
     bindNavGuard();
     highlightNav();
+    injectNavBurger();
 
     Rotator.start();
     renderTextPage();

@@ -21,11 +21,19 @@ a:hover{text-decoration:underline}
 .header{
   background:linear-gradient(180deg, rgba(127,243,231,.10), rgba(0,0,0,0));
   border-bottom:1px solid var(--line);
+  position:relative;
 }
 .brand{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
 .brand h1{margin:0;font-size:40px;letter-spacing:.5px;color:var(--aqua)}
 .brand .tag{color:var(--muted);margin-top:6px}
 .nav{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+/* hamburger menu (JS-injected) */
+.nav-burger{display:none;margin-top:10px}
+.nav.nav-collapsible{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:6px;padding:12px 18px;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 10px 28px rgba(0,0,0,.6);z-index:200}
+.nav.nav-collapsible.nav-open{display:flex}
+.nav.nav-collapsible .pill{border-radius:8px;border-color:transparent;justify-content:flex-start}
+.nav.nav-collapsible .pill.active{border-color:var(--violet)}
+.nav-burger-active .nav-burger{display:inline-flex}
 .pill{
   display:inline-flex;align-items:center;gap:10px;
   border:1px solid var(--line);
