@@ -330,6 +330,53 @@
     });
   }
 
+  function injectMhBanner(){
+    if(document.getElementById('mh-bar')) return;
+    const el = document.createElement('div');
+    el.id='mh-bar';
+    el.innerHTML='💚 <span style="color:rgba(74,222,128,.8)">If you\'re struggling, help is available:</span> <a href="https://findahelpline.com" target="_blank" rel="noopener" style="color:#4de88e;text-decoration:none;border-bottom:1px solid rgba(74,222,128,.35)">Find a Helpline</a> <span style="color:#3a5a3a">·</span> <a href="https://wmhdofficial.com" target="_blank" rel="noopener" style="color:#4de88e;text-decoration:none;border-bottom:1px solid rgba(74,222,128,.35)">Act Now ↗</a><button onclick="document.getElementById(\'mh-bar\').remove()" style="margin-left:auto;background:none;border:none;color:#4a6a4a;font-size:1.2rem;cursor:pointer;padding:0 .2rem;line-height:1" aria-label="Close">×</button>';
+    Object.assign(el.style,{position:'fixed',bottom:'0',left:'0',right:'0',background:'#07110a',borderTop:'1px solid rgba(74,222,128,.25)',padding:'.55rem 1rem',display:'flex',alignItems:'center',gap:'.65rem',zIndex:'9999',fontFamily:'system-ui,sans-serif',fontSize:'.72rem',flexWrap:'wrap'});
+    document.body.appendChild(el);
+  }
+
+  function injectNavBurger(){
+    const nav = $('.nav');
+    if(!nav) return;
+
+    // Add Мерч link if not present
+    if(!nav.querySelector('[href="/merch"]')){
+      const m = document.createElement('a');
+      m.className='pill'; m.href='/merch';
+      m.textContent='🛍 Мерч';
+      nav.appendChild(m);
+    }
+
+    const header = nav.closest('.header,.wrap') || nav.parentNode;
+    const btn = document.createElement('button');
+    btn.className='nav-burger btn';
+    btn.setAttribute('aria-expanded','false');
+    btn.setAttribute('aria-label','Открыть меню');
+    btn.textContent='☰ Меню';
+    nav.parentNode.insertBefore(btn, nav);
+    nav.classList.add('nav-collapsible');
+    header.classList.add('nav-burger-active');
+
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const open = nav.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? '✕ Закрыть' : '☰ Меню';
+    });
+
+    document.addEventListener('click', ()=>{
+      nav.classList.remove('nav-open');
+      btn.setAttribute('aria-expanded','false');
+      btn.textContent='☰ Меню';
+    });
+
+    nav.addEventListener('click', (e)=>{ e.stopPropagation(); });
+  }
+
   function injectTawk(){
     const t = ST.cfg?.chat?.tawk;
     if(!t || !t.embed_script) return;
@@ -346,6 +393,8 @@
     bindLangToggle();
     bindNavGuard();
     highlightNav();
+    injectNavBurger();
+    injectMhBanner();
 
     Rotator.start();
     renderTextPage();

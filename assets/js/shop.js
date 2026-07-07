@@ -95,6 +95,15 @@
           color:rgba(127,243,231,.3);font-size:32px;">✦</div>`;
 
     const contactHref = 'https://t.me/messycketch';
+    const wiseHref = product.wise_url || null;
+    const wiseBtn = wiseHref
+      ? `<a href="${wiseHref}" target="_blank" rel="noopener" style="
+          flex:1;display:block;text-align:center;padding:10px 16px;
+          background:linear-gradient(90deg,#163300,#2d6a00);
+          border:1px solid #4ade8066;color:#4ade80;border-radius:6px;
+          font-weight:700;font-size:14px;text-decoration:none;
+          font-family:'Courier New',monospace;">🏦 Wise $${product.price_usd || ''}</a>`
+      : '';
 
     c.innerHTML = `
       ${imgHtml}
@@ -124,6 +133,7 @@
           background:#7ff3e7;color:#0a0d10;border-radius:6px;
           font-weight:700;font-size:14px;text-decoration:none;
           font-family:'Courier New',monospace;">${t('buy')}</a>
+        ${wiseBtn}
         <button onclick="closeShopModal()" style="
           padding:10px 16px;background:none;border:1px solid rgba(127,243,231,.3);
           color:#7ff3e7;border-radius:6px;cursor:pointer;font-size:13px;
