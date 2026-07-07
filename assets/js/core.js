@@ -46,6 +46,7 @@
     'nav.contacts':{ru:'Контакты',en:'Contacts'},
     'nav.ai':{ru:'AI',en:'AI'},
     'nav.shop':{ru:'Шоп',en:'Shop'},
+    'nav.merch':{ru:'Мерч',en:'Merch'},
     'nav.studio':{ru:'Студия',en:'Studio'},
     'studio.title':{ru:'Студия',en:'Studio'},
     'studio.subtitle':{ru:'Процесс · UV-ревилы · За кулисами · Aelin AquaSoul',en:'Process · UV reveals · Behind the scenes · Aelin AquaSoul'},

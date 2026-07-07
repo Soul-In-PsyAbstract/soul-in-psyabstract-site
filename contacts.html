@@ -18,6 +18,8 @@
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#0a0d10">
   <script src="/assets/js/sipa-auth.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7P1M9TMSWS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-7P1M9TMSWS");</script>
 </head>
 <body data-page="contacts">
   <header class="header">
@@ -30,7 +32,6 @@
         </div>
         <div class="tools">
           <button class="btn" id="lang-toggle">RU</button>
-          <button class="btn" id="kid-toggle">Ребёнок: OFF</button>
         </div>
       </div>
       
@@ -46,6 +47,7 @@
       <a class="pill" href="contacts.html" data-i18n="nav.contacts">Контакты</a>
         <a class="pill" href="soulwish.html">Soul Wish</a>
       <a class="pill" href="ai.html">AI</a>
+      <a class="pill" href="/merch" data-i18n="nav.merch">Мерч</a>
     </nav>
     
     </div>
@@ -63,6 +65,10 @@
   <p class="small" style="margin-bottom:14px">Reach me anywhere — pick what's convenient.</p>
   <div id="contacts-root-en"></div>
 </section>
+
+<div style="width:100%;height:500px;margin:1.5rem 0;border-radius:12px;overflow:hidden;border:1px solid rgba(0,245,255,.15);">
+  <iframe src="https://storage.googleapis.com/maps-solutions-5qcn1u2721/address-selection/mv1s/address-selection.html" width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
+</div>
 
 <section class="card">
   <h2 style="font-size:18px;margin-bottom:12px">QR</h2>
@@ -92,7 +98,7 @@
 
     <footer class="footer" role="contentinfo">Aelin AquaSoul · Soul In PsyAbstract · “In the moment of panic, she still does the right thing.”</footer>
   </main>
-  <script src="assets/js/core.js?v=8"></script>
+  <script src="assets/js/core.js?v=9"></script>
   <script src="assets/js/data.js"></script>
   <script src="assets/js/pwa.js"></script>
   <script>

@@ -44,6 +44,8 @@
     .featured-item .overlay{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(0deg,rgba(0,0,0,.70),transparent);color:rgba(255,255,255,.80);font-size:12px}
     .price-tag{display:inline-block;background:rgba(127,243,231,.15);color:var(--aqua);border:1px solid rgba(127,243,231,.25);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
   </style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7P1M9TMSWS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-7P1M9TMSWS");</script>
 </head>
 <body data-page="index">
   <header class="header">
@@ -56,7 +58,6 @@
         </div>
         <div class="tools">
           <button class="btn" id="lang-toggle">EN</button>
-          <button class="btn" id="kid-toggle">Ребёнок: OFF</button>
         </div>
       </div>
       <nav class="nav">
@@ -73,6 +74,7 @@
         <a class="pill" href="contacts.html" data-i18n="nav.contacts">Контакты</a>
         <a class="pill" href="soulwish.html">Soul Wish</a>
         <a class="pill" href="ai.html" data-i18n="nav.ai">AI</a>
+        <a class="pill" href="/merch" data-i18n="nav.merch">Мерч</a>
       </nav>
     </div>
   </header>
@@ -263,7 +265,7 @@
     <footer class="footer" role="contentinfo">Aelin AquaSoul · Soul In PsyAbstract · "In the moment of panic, she still does the right thing."</footer>
   </main>
 
-  <script src="assets/js/core.js?v=8"></script>
+  <script src="assets/js/core.js?v=9"></script>
   <script>
     if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(function(){});
   </script>
