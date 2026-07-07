@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta name="facebook-domain-verification" content="y7kiyzg2ii3z0sh4e7xkptdjtaedub" />
     <script>
@@ -31,21 +31,21 @@
           <div class="small" id="hero-rotator"></div>
         </div>
         <div class="tools">
-          <button class="btn" id="lang-toggle">RU</button>
+          <div id="google_translate_element" class="gt-widget" title="Translate this page"></div>
         </div>
       </div>
       <nav class="nav">
-        <a class="pill" href="index.html" data-i18n="nav.home">Главная</a>
-        <a class="pill" href="gallery.html" data-i18n="nav.gallery">Галерея</a>
-      <a class="pill" href="store.html" data-i18n="nav.shop">Шоп</a>
+        <a class="pill" href="index.html" data-i18n="nav.home">Home</a>
+        <a class="pill" href="gallery.html" data-i18n="nav.gallery">Gallery</a>
+      <a class="pill" href="store.html" data-i18n="nav.shop">Shop</a>
         <a class="pill" href="nft.html" data-i18n="nav.nft">NFT</a>
       <a class="pill" href="token.html">$SIPA</a>
         <a class="pill" href="studio.html" data-i18n="nav.studio">Studio</a>
-        <a class="pill" href="manifest.html" data-i18n="nav.manifest">Манифест</a>
-        <a class="pill" href="poems.html" data-i18n="nav.poems">Стихи</a>
-        <a class="pill" href="songs.html" data-i18n="nav.songs">Песни</a>
+        <a class="pill" href="manifest.html" data-i18n="nav.manifest">Manifest</a>
+        <a class="pill" href="poems.html" data-i18n="nav.poems">Poems</a>
+        <a class="pill" href="songs.html" data-i18n="nav.songs">Songs</a>
         <a class="pill" href="faq.html" data-i18n="nav.faq">FAQ</a>
-        <a class="pill" href="contacts.html" data-i18n="nav.contacts">Контакты</a>
+        <a class="pill" href="contacts.html" data-i18n="nav.contacts">Contacts</a>
         <a class="pill" href="soulwish.html">Soul Wish</a>
         <a class="pill" href="ai.html" data-i18n="nav.ai">AI</a>
         <a class="pill" href="/merch" data-i18n="nav.merch">Мерч</a>
@@ -138,6 +138,12 @@ through lines, through heart, through truth.</pre>
     <footer class="footer" role="contentinfo">Aelin AquaSoul · Soul In PsyAbstract · "In the moment of panic, she still does the right thing."</footer>
   </main>
   <script src="assets/js/core.js?v=9"></script>
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ru,he,es,fr,de,pt,ar,it,zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script src="assets/js/pwa.js"></script>
   <script>
     if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{});

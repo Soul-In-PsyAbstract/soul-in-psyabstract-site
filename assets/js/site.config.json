@@ -8,7 +8,7 @@
       "ru",
       "en"
     ],
-    "default_lang": "ru",
+    "default_lang": "en",
     "routing": "spa-hash",
     "content_mode": "verbatim"
   },

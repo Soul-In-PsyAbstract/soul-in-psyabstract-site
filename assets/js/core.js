@@ -5,7 +5,7 @@
   const ST = PSA.ST = PSA.ST || {};
   const LS = window.localStorage;
   const LANG_KEY = 'soulinpsy_lang';
-  const DEFAULT_LANG = 'ru';
+  const DEFAULT_LANG = 'en';
 
   const $ = (s, r=document)=>r.querySelector(s);
   const $$= (s, r=document)=>Array.from(r.querySelectorAll(s));
@@ -30,7 +30,7 @@
       ST.cfg = await fetchJSON('/assets/js/site.config.json');
       return ST.cfg;
     }catch(e){
-      ST.cfg = { project:{name:'SoulInPsyAbstract', languages:['ru','en'], default_lang:'ru'}, texts:{ hero_phrases:'/assets/texts/hero_phrases.json' } };
+      ST.cfg = { project:{name:'SoulInPsyAbstract', languages:['ru','en'], default_lang:'en'}, texts:{ hero_phrases:'/assets/texts/hero_phrases.json' } };
       return ST.cfg;
     }
   }
@@ -60,10 +60,12 @@
   };
 
   function getLang(){
+    // English-primary: ignore browser locale auto-detection so the site
+    // always defaults to English. Visitors who want another language use
+    // the Google Translate widget instead of a hardcoded RU/EN toggle.
     const v = LS.getItem(LANG_KEY);
     if(v==='ru' || v==='en') return v;
-    const n = (navigator.language||'ru').toLowerCase();
-    return n.startsWith('ru') ? 'ru' : 'en';
+    return DEFAULT_LANG;
   }
 
   function setLang(l){

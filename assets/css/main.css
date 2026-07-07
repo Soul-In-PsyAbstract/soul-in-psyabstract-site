@@ -403,14 +403,11 @@ pre.txt{
 .eth-row .addr { color: var(--muted); word-break: break-all; }
 
 /* ── lang sections ───────────────────────────────────────── */
-/* default: show RU, hide EN (before JS runs) */
-body [data-lang="en"] { display: none; }
-body [data-lang="ru"] { display: block; }
-/* after JS sets html[data-lang]: override by active language */
-html[data-lang="en"] body [data-lang="ru"] { display: none; }
-html[data-lang="en"] body [data-lang="en"] { display: block; }
-html[data-lang="ru"] body [data-lang="en"] { display: none; }
-html[data-lang="ru"] body [data-lang="ru"] { display: block; }
+/* English-primary: EN always shown; RU/HE hardcoded duplicates hidden.
+   Other languages are handled by the Google Translate widget, not by
+   shipping every string three times in the HTML source. */
+body [data-lang="en"] { display: block; }
+body [data-lang="ru"], body [data-lang="he"] { display: none; }
 
 /* ── art title ───────────────────────────────────────────── */
 .art-title {
