@@ -56,6 +56,7 @@
     'studio.candles':{ru:'Свечи',en:'Candles'},
     'studio.glue':{ru:'Горячий клей',en:'Hot Glue Art'},
     'studio.moments':{ru:'Моменты',en:'Studio Moments'},
+    'studio.skincare':{ru:'Косметика',en:'Skincare Lab'},
     'cta.buy':{ru:'Купить',en:'Buy'},
   };
 
